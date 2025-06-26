@@ -11,4 +11,10 @@
       <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Models\Database\Config\" />
+      <Folder Include="Models\Database\Live\" />
+      <Folder Include="Models\Database\Secure\" />
+    </ItemGroup>
+
 </Project>
