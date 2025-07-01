@@ -12,9 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Models\Database\Config\" />
-      <Folder Include="Models\Database\Live\" />
-      <Folder Include="Models\Database\Secure\" />
+      <Folder Include="Database\Handlers\Interfaces\Secure\" />
+      <Folder Include="Database\Handlers\PgSql\Public\" />
     </ItemGroup>
 
 </Project>

@@ -4,17 +4,17 @@ namespace EchoLib.Auth.Signing;
 
 public class PublicSigningKey
 {
-	private byte[] Value { get; }
+	private byte[] Key { get; }
 
-	public Ed25519PublicKeyParameters KeyParams => new(Value, 0);
+	public Ed25519PublicKeyParameters KeyParams => new(Key);
 
 	public PublicSigningKey(string key)
 	{
-		Value = Convert.FromBase64String(key);
+		Key = Convert.FromBase64String(key);
 	}
 
 	public PublicSigningKey(byte[] key)
 	{
-		Value = key;
+		Key = key;
 	}
 }

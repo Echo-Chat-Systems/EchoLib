@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json.Serialization;
 
-namespace EchoLib.Models;
+namespace EchoLib.Models.Net;
 
 public class Response
 {

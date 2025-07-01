@@ -1,12 +1,20 @@
+using Org.BouncyCastle.Crypto.Parameters;
+
 namespace EchoLib.Auth.Signing;
 
 public class PrivateSigningKey
 {
-	private string _key { get; set; }
+	private byte[] Key { get; }
+
+	public Ed25519PrivateKeyParameters KeyParams => new(Key);
 
 	public PrivateSigningKey(string key)
 	{
-		// TODO: Key perform key integrity checks
-		_key = key;
+		Key = Convert.FromBase64String(key);
+	}
+
+	public PrivateSigningKey(byte[] key)
+	{
+		Key = key;
 	}
 }

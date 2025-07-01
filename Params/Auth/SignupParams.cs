@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using EchoLib.Models.Users.Broadcasts.User;
+using EchoLib.Models.Net.Users.Broadcasts.User;
 
 namespace EchoLib.Params.Auth;
 

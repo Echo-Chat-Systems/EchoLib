@@ -1,4 +1,4 @@
-namespace EchoLib.Models.Users;
+namespace EchoLib.Models.Net.Users;
 
 public class BaseProfile
 {

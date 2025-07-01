@@ -1,8 +1,8 @@
 using EchoLib.Auth.Signing;
-using EchoLib.Models.Users.Broadcasts.User;
-using EchoLib.Models.Users.Reputation;
+using EchoLib.Models.Net.Users.Broadcasts.User;
+using EchoLib.Models.Net.Users.Reputation;
 
-namespace EchoLib.Models.Users.Broadcasts.Server;
+namespace EchoLib.Models.Net.Users.Broadcasts.Server;
 
 public class ServerUserPackage
 {

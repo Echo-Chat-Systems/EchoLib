@@ -1,9 +1,9 @@
 using System.Data;
 using EchoLib.Auth.Signing;
 
-namespace EchoLib.Models.Database.Public;
+namespace EchoLib.Database.Models.Public;
 
-public class User(IDataRecord record) : BaseModel(record)
+public class UserRow(IDataRecord record) : BaseModel(record)
 {
 	/// <summary>
 	/// User's public signing key.

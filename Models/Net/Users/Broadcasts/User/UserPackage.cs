@@ -1,6 +1,6 @@
 using EchoLib.Auth;
 
-namespace EchoLib.Models.Users.Broadcasts.User;
+namespace EchoLib.Models.Net.Users.Broadcasts.User;
 
 public class UserPackage
 {

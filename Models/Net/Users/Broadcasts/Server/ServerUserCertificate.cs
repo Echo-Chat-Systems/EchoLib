@@ -1,7 +1,6 @@
-using EchoLib.Auth;
 using EchoLib.Auth.Signing;
 
-namespace EchoLib.Models.Users.Broadcasts.Server;
+namespace EchoLib.Models.Net.Users.Broadcasts.Server;
 
 public class ServerUserCertificate
 {

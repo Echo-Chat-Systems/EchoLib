@@ -1,6 +1,6 @@
 using EchoLib.Auth.Signing;
 
-namespace EchoLib.Models.Users.Reputation;
+namespace EchoLib.Models.Net.Users.Reputation;
 
 public class Rep
 {
