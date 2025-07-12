@@ -50,4 +50,9 @@ public class Signature
 	{
 		return Verify(pubKey.KeyParams, expected);
 	}
+
+	public override string ToString()
+	{
+		return Convert.ToBase64String(_value);
+	}
 }

@@ -8,13 +8,18 @@ public class PrivateSigningKey
 
 	public Ed25519PrivateKeyParameters KeyParams => new(Key);
 
+	public PrivateSigningKey(byte[] key)
+	{
+		Key = key;
+	}
+
 	public PrivateSigningKey(string key)
 	{
 		Key = Convert.FromBase64String(key);
 	}
 
-	public PrivateSigningKey(byte[] key)
+	public override string ToString()
 	{
-		Key = key;
+		return Convert.ToBase64String(Key);
 	}
 }

@@ -84,7 +84,7 @@ public static class UserFileHelper
 
 	private static byte[] DeriveKey(string passphrase, byte[] salt)
 	{
-		using Rfc2898DeriveBytes kdf = new Rfc2898DeriveBytes(passphrase, salt, Iterations, HashAlgorithmName.SHA3_256);
+		using Rfc2898DeriveBytes kdf = new(passphrase, salt, Iterations, HashAlgorithmName.SHA3_256);
 		return kdf.GetBytes(KeySize);
 	}
 

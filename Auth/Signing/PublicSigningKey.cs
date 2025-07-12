@@ -17,4 +17,9 @@ public class PublicSigningKey
 	{
 		Key = key;
 	}
+
+	public override string ToString()
+	{
+		return Convert.ToBase64String(Key);
+	}
 }

@@ -1,7 +1,11 @@
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using EchoLib.Comms;
+using EchoLib.Models.Other;
+using EchoLib.Params.Auth.Error;
+using EchoLib.Processes.Error;
 
 namespace EchoLib.Helpers;
 
@@ -14,7 +18,7 @@ public static class WebSocketTranslator
 	/// <param name="parameters">Parameters of the action</param>
 	/// <typeparam name="TAction">Action Type</typeparam>
 	/// <typeparam name="TParams">Action Parameters Type</typeparam>
-	public static async Task SendAction<TAction, TParams>(ClientWebSocket socket, TParams parameters)
+	public static async Task SendAction<TAction, TParams>(WebSocket socket, TParams parameters)
 	where TAction : IAction<TParams>, new()
 	{
 		// Create a message envelope for the action
@@ -32,5 +36,15 @@ public static class WebSocketTranslator
 		byte[] json = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
 
 		await socket.SendAsync(json, WebSocketMessageType.Text, true, CancellationToken.None);
+	}
+
+	public static async Task SendError<TParams>(WebSocket socket, ErrorTypes errorType, MessageEnvelope<TParams> miq, string? errorMessage = null)
+	{
+		await SendAction<ErrorAction, ErrorParams>(socket, new ErrorParams
+		{
+			Message = errorMessage,
+			Type = (int)errorType,
+			MessageInQuestion = JsonSerializer.Serialize(miq, StaticOptions.JsonSerialzer)
+		});
 	}
 }
