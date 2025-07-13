@@ -4,8 +4,8 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using EchoLib.Comms;
 using EchoLib.Models.Other;
-using EchoLib.Params.Auth.Error;
-using EchoLib.Processes.Error;
+using EchoLib.Processes.Actions.Error;
+using EchoLib.Processes.Params.Error;
 
 namespace EchoLib.Helpers;
 

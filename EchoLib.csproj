@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <PackageId>EchoChat.Core</PackageId>
-        <Version>0.0.1-dev-00001</Version>
+        <Version>0.0.1-dev-00014</Version>
         <Authors>Kyle Pannan</Authors>
         <Company>EchoChat</Company>
         <Description>Core library for EchoChat, providing essential functionalities and interfaces.</Description>
@@ -18,8 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Database\Handlers\Interfaces\Secure\" />
-      <Folder Include="Database\Handlers\PgSql\Public\" />
+      <Folder Include="Processes\Actions\Auth\Signup\" />
     </ItemGroup>
 
 </Project>

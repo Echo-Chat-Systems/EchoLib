@@ -1,4 +1,4 @@
-using EchoLib.Params.Auth.Signin;
+using EchoLib.Processes.Params.Auth.Signin;
 
 namespace EchoLib.Comms;
 
