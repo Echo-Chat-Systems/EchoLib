@@ -1,4 +1,5 @@
 using System.Data;
+using Core.Helpers;
 
 namespace Database.Models.Chat;
 

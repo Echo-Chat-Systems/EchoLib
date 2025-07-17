@@ -1,12 +1,13 @@
 using System.Data;
 using System.Data.Common;
+using Core.Auth.Signing;
 using Database.Models.Chat;
 
 namespace Database.Handlers.Defaults.Chat;
 
 public class ChannelMembersHandler : BaseHandler
 {
-	public async Task<MChannelMember> Create(string userId, Guid channelId, long permissions)
+	public async Task<MChannelMember> Create(UserId userId, Guid channelId, long permissions)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -15,7 +16,7 @@ public class ChannelMembersHandler : BaseHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@user_id", new Parameter { Type = DbType.String, Value = userId } },
+			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } },
 			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = channelId } },
 			{ "permissions", new Parameter { Type = DbType.Int64, Value = permissions } }
 		});
@@ -40,7 +41,7 @@ public class ChannelMembersHandler : BaseHandler
 		return await RunGet(command, reader => new MChannelMember(reader));
 	}
 
-	public async Task<MChannelMember?> Get(string userId, Guid channelId)
+	public async Task<MChannelMember?> Get(UserId userId, Guid channelId)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -50,7 +51,7 @@ public class ChannelMembersHandler : BaseHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@user_id", new Parameter { Type = DbType.String, Value = userId } },
+			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } },
 			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = channelId } }
 		});
 
@@ -91,7 +92,7 @@ public class ChannelMembersHandler : BaseHandler
 		await RunDelete(command);
 	}
 
-	public async Task Delete(string userId, Guid channelId)
+	public async Task Delete(UserId userId, Guid channelId)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -101,7 +102,7 @@ public class ChannelMembersHandler : BaseHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@user_id", new Parameter { Type = DbType.String, Value = userId } },
+			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } },
 			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = channelId } }
 		});
 
@@ -125,7 +126,7 @@ public class ChannelMembersHandler : BaseHandler
 		return await RunExists(command);
 	}
 
-	public async Task<bool> Exists(string userId, Guid channelId)
+	public async Task<bool> Exists(UserId userId, Guid channelId)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -135,7 +136,7 @@ public class ChannelMembersHandler : BaseHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@user_id", new Parameter { Type = DbType.String, Value = userId } },
+			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } },
 			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = channelId } }
 		});
 

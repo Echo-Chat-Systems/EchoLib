@@ -9,7 +9,9 @@ public class MUser(IDataRecord record) : BaseModel(record)
 	/// <summary>
 	/// User's public signing key.
 	/// </summary>
-	public new PublicSigningKey Id { get; } = new((byte[])record.GetValue(record.GetOrdinal("id")));
+	public new string Id { get; } = record.GetString(record.GetOrdinal("id"));
+
+	public string EncryptionKey { get; } = record.GetString(record.GetOrdinal("encryption_key"));
 
 	/// <summary>
 	/// Username.
@@ -30,19 +32,6 @@ public class MUser(IDataRecord record) : BaseModel(record)
 	public bool IsOnline { get; set; } = record.GetBoolean(record.GetOrdinal("is_online"));
 
 	public bool IsBanned { get; set; } = record.GetBoolean(record.GetOrdinal("is_banned"));
-
-	private MProfile? _profile;
-
-	public MProfile Profile
-	{
-		// Deserialise on first read attempt
-		get => (_profile ??= JsonSerializer.Deserialize<MProfile>(ProfileRaw, StaticOptions.JsonSerialzer))!;
-		set
-		{
-			_profile = value;
-			ProfileRaw = JsonSerializer.Serialize(value, StaticOptions.JsonSerialzer);
-		}
-	}
 
 	public class MProfile
 	{

@@ -39,7 +39,7 @@ public abstract class UserRolesHandler : BaseHandler
 		return await RunGet(command, reader => new MUserRole(reader));
 	}
 
-	public async Task<MUserRole?> Get(PublicSigningKey user, Guid role)
+	public async Task<MUserRole?> Get(string user, Guid role)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -48,7 +48,7 @@ public abstract class UserRolesHandler : BaseHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@user_id", new Parameter { Type = DbType.String, Value = user.ToString() } },
+			{ "@user_id", new Parameter { Type = DbType.String, Value = user } },
 			{ "@role_id", new Parameter { Type = DbType.Guid, Value = role } }
 		});
 
@@ -106,7 +106,7 @@ public abstract class UserRolesHandler : BaseHandler
 		return await RunExists(command);
 	}
 
-	public async Task<bool> Exists(PublicSigningKey user, Guid role)
+	public async Task<bool> Exists(string user, Guid role)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -123,7 +123,7 @@ public abstract class UserRolesHandler : BaseHandler
 		return await RunExists(command);
 	}
 
-	public async Task<List<MUserRole>> GetMany(PublicSigningKey userId)
+	public async Task<List<MUserRole>> GetMany(string userId)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);

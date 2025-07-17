@@ -65,13 +65,10 @@ public class GuildsHandler : BaseHandler
 		command.CommandText = "DELETE FROM chat.guilds WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = id;
-
-		// Add parameters
-		command.Parameters.Add(pId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
+		});
 
 		// Execute command
 		await RunDelete(command);
@@ -84,13 +81,10 @@ public class GuildsHandler : BaseHandler
 		command.CommandText = "SELECT id FROM chat.guilds WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = id;
-
-		// Create parameters
-		command.Parameters.Add(pId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
+		});
 
 		// Execute command
 		return await RunExists(command);

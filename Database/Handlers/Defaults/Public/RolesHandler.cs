@@ -11,28 +11,16 @@ public abstract class RolesHandler : BaseHandler
 		// Create command
 		await using DbCommand command = await Command(true);
 		command.CommandText = "INSERT INTO public.roles VALUES (@guild_id, @name, @customisation, @permissions) RETURNING *";
-		
-		// Create parameters 
-		DbParameter pGuildId = command.CreateParameter();
-		pGuildId.ParameterName = "@guild_id";
-		pGuildId.DbType = DbType.Guid;
-		pGuildId.Value = guildId;
-		
-		DbParameter pName = command.CreateParameter();
-		pName.ParameterName = "@name";
-		pName.DbType = DbType.String;
-		pName.Value = name;
-		
-		DbParameter pCustomisation = command.CreateParameter();
-		pCustomisation.ParameterName = "@customisation";
-		pCustomisation.DbType = DbType.String;
-		pCustomisation.Value = customisation;
-		
-		DbParameter pPermissions = command.CreateParameter();
-		pPermissions.ParameterName = "@permissions";
-		pPermissions.DbType = DbType.Int64;
-		pPermissions.Value = permissions;
-		
+
+		// Create parameters
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@guild_id", new Parameter { Type = DbType.Guid, Value = guildId } },
+			{ "@name", new Parameter { Type = DbType.String, Value = name } },
+			{ "@customisation", new Parameter { Type = DbType.String, Value = customisation } },
+			{ "@permissions", new Parameter { Type = DbType.Int64, Value = permissions } }
+		});
+
 		// Execute command
 		return await RunModify(command, reader => new MRole(reader));
 	}
@@ -42,19 +30,15 @@ public abstract class RolesHandler : BaseHandler
 		// Create command
 		await using DbCommand command = await Command(false);
 		command.CommandText = "SELECT * FROM public.roles WHERE id = @id";
-		
+
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = roleId;
-		
-		// Add parameters
-		command.Parameters.Add(pId);
-		
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = roleId } }
+		});
+
 		// Execute command
 		return await RunGet(command, reader => new MRole(reader));
-
 	}
 
 	public async Task<MRole> Update(MRole role)
@@ -62,34 +46,16 @@ public abstract class RolesHandler : BaseHandler
 		// Create command
 		await using DbCommand command = await Command(true);
 		command.CommandText = "UPDATE public.roles SET name = @name, customisation = @customisation, permissions = @permissions WHERE id = @id";
-		
+
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = role.Id;
-		
-		DbParameter pName = command.CreateParameter();
-		pName.ParameterName = "@name";
-		pName.DbType = DbType.String;
-		pName.Value = role.Name;
-		
-		DbParameter pCustomisation = command.CreateParameter();
-		pCustomisation.ParameterName = "@customisation";
-		pCustomisation.DbType = DbType.String;
-		pCustomisation.Value = role.CustomisationRaw;
-		
-		DbParameter pPermissions = command.CreateParameter();
-		pPermissions.ParameterName = "@permissions";
-		pPermissions.DbType = DbType.Int64;
-		pPermissions.Value = (long)role.Permissions;
-		
-		// Add parameters 
-		command.Parameters.Add(pId);
-		command.Parameters.Add(pName);
-		command.Parameters.Add(pCustomisation);
-		command.Parameters.Add(pPermissions);
-		
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = role.Id } },
+			{ "@name", new Parameter { Type = DbType.String, Value = role.Name } },
+			{ "@customisation", new Parameter { Type = DbType.String, Value = role.CustomisationRaw } },
+			{ "@permissions", new Parameter { Type = DbType.Int64, Value = (long)role.Permissions } }
+		});
+
 		// Execute command
 		return await RunModify(command, reader => new MRole(reader));
 	}
@@ -99,35 +65,29 @@ public abstract class RolesHandler : BaseHandler
 		// Create command
 		await using DbCommand command = await Command(true);
 		command.CommandText = "DELETE FROM public.roles WHERE id = @id";
-		
+
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = roleId;
-		
-		// Add parameters
-		command.Parameters.Add(pId);
-		
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = roleId } }
+		});
+
 		// Execute command
 		await RunDelete(command);
 	}
 
 	public async Task<bool> Exists(Guid roleId)
 	{
-		// Create command 
-		await using DbCommand command = await Command(true);
+		// Create command
+		await using DbCommand command = await Command(false);
 		command.CommandText = "SELECT id FROM public.roles WHERE id = @id";
-		
-		// Create parameters 
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = roleId;
-		
-		// Add parameters
-		command.Parameters.Add(pId);
-		
+
+		// Create parameters
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = roleId } }
+		});
+
 		// Execute command
 		return await RunExists(command);
 	}

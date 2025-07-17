@@ -1,3 +1,4 @@
+using System.Data;
 using System.Data.Common;
 
 namespace Database.Handlers.Defaults.Config;
@@ -11,13 +12,10 @@ public class OwnersHandler : BaseHandler
 		command.CommandText = "INSERT INTO config.owners VALUES (@owner_id)";
 
 		// Create parameters
-		DbParameter pOwnerId = command.CreateParameter();
-		pOwnerId.ParameterName = "@owner_id";
-		pOwnerId.DbType = System.Data.DbType.Guid;
-		pOwnerId.Value = ownerId;
-
-		// Add parameters
-		command.Parameters.Add(pOwnerId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@owner_id", new Parameter { Type = DbType.Guid, Value = ownerId } }
+		});
 
 		// Execute command
 		await RunModify<object?>(command, _ => null);
@@ -30,13 +28,10 @@ public class OwnersHandler : BaseHandler
 		command.CommandText = "DELETE FROM config.owners WHERE user_id = @owner_id";
 
 		// Create parameters
-		DbParameter pOwnerId = command.CreateParameter();
-		pOwnerId.ParameterName = "@owner_id";
-		pOwnerId.DbType = System.Data.DbType.Guid;
-		pOwnerId.Value = ownerId;
-
-		// Add parameters
-		command.Parameters.Add(pOwnerId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@owner_id", new Parameter { Type = DbType.Guid, Value = ownerId } }
+		});
 
 		// Execute command
 		await RunDelete(command);
@@ -49,13 +44,10 @@ public class OwnersHandler : BaseHandler
 		command.CommandText = "SELECT user_id FROM config.owners WHERE user_id = @owner_id";
 
 		// Create parameters
-		DbParameter pOwnerId = command.CreateParameter();
-		pOwnerId.ParameterName = "@owner_id";
-		pOwnerId.DbType = System.Data.DbType.Guid;
-		pOwnerId.Value = ownerId;
-
-		// Add parameters
-		command.Parameters.Add(pOwnerId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@owner_id", new Parameter { Type = DbType.Guid, Value = ownerId } }
+		});
 
 		// Get result
 		return await RunExists(command);
@@ -67,11 +59,14 @@ public class OwnersHandler : BaseHandler
 		await using DbCommand command = await Command(false);
 		command.CommandText = "SELECT * FROM config.owners";
 
-		// Get result
+		// Execute command
 		DbDataReader result = await command.ExecuteReaderAsync();
 
-		List<Guid> ids = [];
-		while (result.HasRows) ids.Add(result.GetGuid(0));
+		List<Guid> ids = new();
+		while (await result.ReadAsync())
+		{
+			ids.Add(result.GetGuid(0));
+		}
 
 		return ids;
 	}

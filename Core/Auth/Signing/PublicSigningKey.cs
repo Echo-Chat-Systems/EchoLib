@@ -23,3 +23,14 @@ public class PublicSigningKey
 		return Convert.ToBase64String(Key);
 	}
 }
+
+public class UserId: PublicSigningKey
+{
+	public UserId(string key) : base(key)
+	{
+	}
+
+	public UserId(byte[] key) : base(key)
+	{
+	}
+}

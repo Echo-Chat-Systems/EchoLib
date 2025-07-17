@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Core.Auth.Signing;
+using Core.Helpers.Snowflake;
 
 namespace Database.Models.NoSql;
 
@@ -15,7 +17,7 @@ public class MMessage()
 
 	[Required]
 	[JsonPropertyName("user_id")]
-	public PublicSigningKey UserId { get; init; }
+	public UserId UserId { get; init; }
 
 	[Required]
 	[JsonPropertyName("channel_id")]
@@ -39,7 +41,7 @@ public class MMessage()
 		{
 			[JsonPropertyName("user_id")]
 			[Required]
-			public PublicSigningKey UserId { get; set; }
+			public UserId UserId { get; set; }
 
 			[JsonPropertyName("guild_emoji_id")] public Guid? GuildEmojiId { get; set; }
 			[JsonPropertyName("emoji_name")] public string? EmojiName { get; set; }

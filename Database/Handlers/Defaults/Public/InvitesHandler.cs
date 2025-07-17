@@ -6,9 +6,8 @@ namespace Database.Handlers.Defaults.Public;
 
 public class InvitesHandler : BaseHandler
 {
-	public async Task<MInvite> Create(Guid guildId, Guid channelId, PublicSigningKey createdBy, int uses,
-		string? customisation = null, DateTime? expiry = null,
-		PublicSigningKey? targetUser = null)
+	public async Task<MInvite> Create(Guid guildId, Guid channelId, string createdBy, int uses,
+		string? customisation = null, DateTime? expiry = null, string? targetUser = null)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -17,52 +16,16 @@ public class InvitesHandler : BaseHandler
 			"VALUES (@guild_id, @channel_id, @created_by, @uses, @customisation, @expiry, @target_user) RETURNING *";
 
 		// Create parameters
-		DbParameter pGuildId = command.CreateParameter();
-		pGuildId.ParameterName = "@guild_id";
-		pGuildId.DbType = DbType.Guid;
-		pGuildId.Value = guildId;
-
-		DbParameter pChannelId = command.CreateParameter();
-		pChannelId.ParameterName = "@channel_id";
-		pChannelId.DbType = DbType.Guid;
-		pChannelId.Value = channelId;
-
-		DbParameter pCreatedBy = command.CreateParameter();
-		pCreatedBy.ParameterName = "@created_by";
-		pCreatedBy.DbType = DbType.String;
-		pCreatedBy.Value = createdBy.ToString();
-
-		DbParameter pUses = command.CreateParameter();
-		pUses.ParameterName = "@uses";
-		pUses.DbType = DbType.Int32;
-		pUses.Value = uses;
-
-		DbParameter pCustomisation = command.CreateParameter();
-		pCustomisation.ParameterName = "@customisation";
-		pCustomisation.DbType = DbType.String;
-		pCustomisation.Value = customisation;
-		pCustomisation.IsNullable = true;
-
-		DbParameter pExpiry = command.CreateParameter();
-		pExpiry.ParameterName = "@expiry";
-		pExpiry.DbType = DbType.DateTime;
-		pExpiry.Value = expiry;
-		pExpiry.IsNullable = true;
-
-		DbParameter pTargetUser = command.CreateParameter();
-		pTargetUser.ParameterName = "@target_user";
-		pTargetUser.DbType = DbType.String;
-		pTargetUser.Value = targetUser?.ToString();
-		pTargetUser.IsNullable = true;
-
-		// Add parameters
-		command.Parameters.Add(pGuildId);
-		command.Parameters.Add(pChannelId);
-		command.Parameters.Add(pCreatedBy);
-		command.Parameters.Add(pUses);
-		command.Parameters.Add(pCustomisation);
-		command.Parameters.Add(pExpiry);
-		command.Parameters.Add(pTargetUser);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@guild_id", new Parameter { Type = DbType.Guid, Value = guildId } },
+			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = channelId } },
+			{ "@created_by", new Parameter { Type = DbType.String, Value = createdBy } },
+			{ "@uses", new Parameter { Type = DbType.Int32, Value = uses } },
+			{ "@customisation", new Parameter { Type = DbType.String, Value = customisation, Nullable = true } },
+			{ "@expiry", new Parameter { Type = DbType.DateTime, Value = expiry, Nullable = true } },
+			{ "@target_user", new Parameter { Type = DbType.String, Value = targetUser, Nullable = true } }
+		});
 
 		// Execute command
 		return await RunModify(command, reader => new MInvite(reader));
@@ -75,13 +38,10 @@ public class InvitesHandler : BaseHandler
 		command.CommandText = "SELECT * FROM public.invites WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = id;
-
-		// Add parameters
-		command.Parameters.Add(pId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
+		});
 
 		// Execute command
 		return await RunGet(command, reader => new MInvite(reader));
@@ -93,60 +53,20 @@ public class InvitesHandler : BaseHandler
 		await using DbCommand command = await Command(true);
 		command.CommandText =
 			"UPDATE public.invites SET guild_id = @guild_id, channel_id = @channel_id, created_by = @created_by, " +
-			"uses = @uses, customisation = @customisation, expires_at = @target_user, target_user = @target_user WHERE id = @id";
+			"uses = @uses, customisation = @customisation, expires_at = @expiry, target_user = @target_user WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = invite.Id;
-
-		DbParameter pGuildId = command.CreateParameter();
-		pGuildId.ParameterName = "@guild_id";
-		pGuildId.DbType = DbType.Guid;
-		pGuildId.Value = invite.GuildId;
-
-		DbParameter pChannelId = command.CreateParameter();
-		pChannelId.ParameterName = "@channel_id";
-		pChannelId.DbType = DbType.Guid;
-		pChannelId.Value = invite.ChannelId;
-
-		DbParameter pCreatedBy = command.CreateParameter();
-		pCreatedBy.ParameterName = "@created_by";
-		pCreatedBy.DbType = DbType.String;
-		pCreatedBy.Value = invite.CreatedBy.ToString();
-
-		DbParameter pUses = command.CreateParameter();
-		pUses.ParameterName = "@uses";
-		pUses.DbType = DbType.Int32;
-		pUses.Value = invite.Uses;
-
-		DbParameter pCustomisation = command.CreateParameter();
-		pCustomisation.ParameterName = "@customisation";
-		pCustomisation.DbType = DbType.String;
-		pCustomisation.Value = invite.CustomisationRaw;
-		pCustomisation.IsNullable = true;
-
-		DbParameter pExpiry = command.CreateParameter();
-		pExpiry.ParameterName = "@expiry";
-		pExpiry.DbType = DbType.DateTime;
-		pExpiry.Value = invite.ExpiresAt;
-		pExpiry.IsNullable = true;
-
-		DbParameter pTargetUser = command.CreateParameter();
-		pTargetUser.ParameterName = "@target_user";
-		pTargetUser.DbType = DbType.String;
-		pTargetUser.Value = invite.TargetUserId?.ToString();
-		pTargetUser.IsNullable = true;
-
-		// Add parameters
-		command.Parameters.Add(pGuildId);
-		command.Parameters.Add(pChannelId);
-		command.Parameters.Add(pCreatedBy);
-		command.Parameters.Add(pUses);
-		command.Parameters.Add(pCustomisation);
-		command.Parameters.Add(pExpiry);
-		command.Parameters.Add(pTargetUser);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = invite.Id } },
+			{ "@guild_id", new Parameter { Type = DbType.Guid, Value = invite.GuildId } },
+			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = invite.ChannelId } },
+			{ "@created_by", new Parameter { Type = DbType.String, Value = invite.CreatedBy.ToString() } },
+			{ "@uses", new Parameter { Type = DbType.Int32, Value = invite.Uses } },
+			{ "@customisation", new Parameter { Type = DbType.String, Value = invite.CustomisationRaw, Nullable = true } },
+			{ "@expiry", new Parameter { Type = DbType.DateTime, Value = invite.ExpiresAt, Nullable = true } },
+			{ "@target_user", new Parameter { Type = DbType.String, Value = invite.TargetUserId?.ToString(), Nullable = true } }
+		});
 
 		// Execute command
 		return await RunModify(command, reader => new MInvite(reader));
@@ -159,14 +79,11 @@ public class InvitesHandler : BaseHandler
 		command.CommandText = "DELETE FROM public.invites WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = id;
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
+		});
 
-		// Add parameters
-		command.Parameters.Add(pId);
-		
 		// Execute command
 		await RunDelete(command);
 	}
@@ -178,13 +95,10 @@ public class InvitesHandler : BaseHandler
 		command.CommandText = "SELECT id FROM chat.channel_members WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = id;
-
-		// Add parameters
-		command.Parameters.Add(pId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
+		});
 
 		// Execute command
 		return await RunExists(command);

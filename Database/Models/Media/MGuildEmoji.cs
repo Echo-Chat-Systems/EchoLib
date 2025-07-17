@@ -12,7 +12,7 @@ public class MGuildEmoji(IDataRecord record) : BaseModel(record)
 	public Guid FileId { get; set; } = record.GetGuid(record.GetOrdinal("file_id"));
 
 	[Flags]
-	public enum MediaType : short
+	public enum MediaType : ushort
 	{
 		Emoji = 0x0001,
 		Sticker = 0x0002,

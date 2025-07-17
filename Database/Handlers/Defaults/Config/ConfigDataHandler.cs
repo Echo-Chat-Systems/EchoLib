@@ -13,19 +13,11 @@ public class ConfigDataHandler : BaseHandler
 		command.CommandText = "INSERT INTO config.data (key, value) VALUES (@key, @value) RETURNING *";
 
 		// Create parameters
-		DbParameter pKey = command.CreateParameter();
-		pKey.ParameterName = "@key";
-		pKey.DbType = DbType.String;
-		pKey.Value = key;
-
-		DbParameter pValue = command.CreateParameter();
-		pValue.ParameterName = "@value";
-		pValue.DbType = DbType.Object; // Adjust DbType as necessary for your value type
-		pValue.Value = value;
-
-		// Add parameters
-		command.Parameters.Add(pKey);
-		command.Parameters.Add(pValue);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@key", new Parameter { Type = DbType.String, Value = key } },
+			{ "@value", new Parameter { Type = DbType.Object, Value = value } }
+		});
 
 		// Execute command
 		return await RunModify(command, reader => new MConfigData(reader));
@@ -38,13 +30,10 @@ public class ConfigDataHandler : BaseHandler
 		command.CommandText = "SELECT * FROM config.data WHERE key = @key";
 
 		// Create parameters
-		DbParameter pKey = command.CreateParameter();
-		pKey.ParameterName = "@key";
-		pKey.DbType = DbType.String;
-		pKey.Value = key;
-
-		// Add parameters
-		command.Parameters.Add(pKey);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@key", new Parameter { Type = DbType.String, Value = key } }
+		});
 
 		// Execute command
 		return await RunGet(command, reader => new MConfigData(reader));
@@ -57,19 +46,11 @@ public class ConfigDataHandler : BaseHandler
 		command.CommandText = "UPDATE config.data SET value = @value WHERE key = @key RETURNING *";
 
 		// Create parameters
-		DbParameter pKey = command.CreateParameter();
-		pKey.ParameterName = "@Key";
-		pKey.DbType = DbType.String;
-		pKey.Value = row.Key;
-
-		DbParameter pValue = command.CreateParameter();
-		pValue.ParameterName = "@value";
-		pValue.DbType = DbType.Object; // Adjust DbType as necessary for your value type
-		pValue.Value = row.Value;
-
-		// Add parameters
-		command.Parameters.Add(pKey);
-		command.Parameters.Add(pValue);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@key", new Parameter { Type = DbType.String, Value = row.Key } },
+			{ "@value", new Parameter { Type = DbType.Object, Value = row.Value } }
+		});
 
 		// Execute command
 		return await RunModify(command, reader => new MConfigData(reader));
@@ -82,13 +63,10 @@ public class ConfigDataHandler : BaseHandler
 		command.CommandText = "DELETE FROM config.data WHERE key = @key";
 
 		// Create parameters
-		DbParameter pKey = command.CreateParameter();
-		pKey.ParameterName = "@key";
-		pKey.DbType = DbType.String;
-		pKey.Value = key;
-
-		// Add parameters
-		command.Parameters.Add(pKey);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@key", new Parameter { Type = DbType.String, Value = key } }
+		});
 
 		// Execute command
 		await RunDelete(command);
@@ -101,13 +79,10 @@ public class ConfigDataHandler : BaseHandler
 		command.CommandText = "SELECT key FROM config.data WHERE key = @key";
 
 		// Create parameters
-		DbParameter pKey = command.CreateParameter();
-		pKey.ParameterName = "@key";
-		pKey.DbType = DbType.String;
-		pKey.Value = key;
-
-		// Add parameters
-		command.Parameters.Add(pKey);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@key", new Parameter { Type = DbType.String, Value = key } }
+		});
 
 		// Get result
 		return await RunExists(command);

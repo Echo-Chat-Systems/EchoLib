@@ -1,13 +1,13 @@
 using System.Data;
 using System.Data.Common;
+using Core.Auth.Signing;
 using Database.Models.Chat;
 
 namespace Database.Handlers.Defaults.Chat;
 
 public class GuildMembersHandler : BaseHandler
 {
-	public async Task<MGuildMember> Create(Guid guildId, string userId, string? nickname = null,
-		string? customisation = null)
+	public async Task<MGuildMember> Create(Guid guildId, UserId userId, string? nickname = null, string? customisation = null)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -18,7 +18,7 @@ public class GuildMembersHandler : BaseHandler
 		AddParams(command, new Dictionary<string, Parameter>
 		{
 			{ "@guild_id", new Parameter { Type = DbType.Guid, Value = guildId } },
-			{ "@user_id", new Parameter { Type = DbType.String, Value = userId } },
+			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } },
 			{ "@nickname", new Parameter { Type = DbType.String, Value = nickname, Nullable = true } },
 			{ "@customisation", new Parameter { Type = DbType.String, Value = customisation, Nullable = true } }
 		});
@@ -27,7 +27,7 @@ public class GuildMembersHandler : BaseHandler
 		return await RunModify(command, reader => new MGuildMember(reader));
 	}
 
-	public async Task<MGuildMember?> Get(Guid guildId, string userId)
+	public async Task<MGuildMember?> Get(Guid guildId, UserId userId)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -37,7 +37,7 @@ public class GuildMembersHandler : BaseHandler
 		AddParams(command, new Dictionary<string, Parameter>
 		{
 			{ "@guild_id", new Parameter { Type = DbType.Guid, Value = guildId } },
-			{ "@user_id", new Parameter { Type = DbType.String, Value = userId } }
+			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } }
 		});
 
 		// Execute command
@@ -72,7 +72,7 @@ public class GuildMembersHandler : BaseHandler
 		{
 			{ "@id", new Parameter { Type = DbType.Guid, Value = member.Id } },
 			{ "@guild_id", new Parameter { Type = DbType.Guid, Value = member.GuildId } },
-			{ "@user_id", new Parameter { Type = DbType.String, Value = member.UserId } },
+			{ "@user_id", new Parameter { Type = DbType.String, Value = member.UserId.ToString() } },
 			{ "@nickname", new Parameter { Type = DbType.String, Value = member.Nickname, Nullable = false } },
 			{ "@customisation", new Parameter { Type = DbType.String, Value = member.CustomisationOverrideRaw } }
 		});

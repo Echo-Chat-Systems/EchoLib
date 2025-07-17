@@ -13,13 +13,10 @@ public class FilesHandler : BaseHandler
 		command.CommandText = "INSERT INTO media.files VALUES (@owner) RETURNING *";
 
 		// Create parameters
-		DbParameter pOwner = command.CreateParameter();
-		pOwner.ParameterName = "@owner";
-		pOwner.DbType = DbType.String;
-		pOwner.Value = owner;
-
-		// Add parameters
-		command.Parameters.Add(pOwner);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@owner", new Parameter { Type = DbType.String, Value = owner } }
+		});
 
 		// Execute command
 		return await RunModify(command, reader => new MFile(reader));
@@ -32,13 +29,10 @@ public class FilesHandler : BaseHandler
 		command.CommandText = "SELECT * FROM media.files WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = id;
-
-		// Add parameters
-		command.Parameters.Add(pId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
+		});
 
 		// Execute command
 		return await RunGet(command, reader => new MFile(reader));
@@ -51,19 +45,11 @@ public class FilesHandler : BaseHandler
 		command.CommandText = "UPDATE media.files SET last_accessed = @last_accessed WHERE id = @id RETURNING *";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = file.Id;
-
-		DbParameter pLastAccessed = command.CreateParameter();
-		pLastAccessed.ParameterName = "@last_accessed";
-		pLastAccessed.DbType = DbType.DateTime;
-		pLastAccessed.Value = file.LastAccessed; 
-			
-		// Add parameters
-		command.Parameters.Add(pId);
-		command.Parameters.Add(pLastAccessed);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = file.Id } },
+			{ "@last_accessed", new Parameter { Type = DbType.DateTime, Value = file.LastAccessed } }
+		});
 
 		// Execute command
 		return await RunModify(command, reader => new MFile(reader));
@@ -76,13 +62,10 @@ public class FilesHandler : BaseHandler
 		command.CommandText = "DELETE FROM media.files WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = id;
-
-		// Add parameters
-		command.Parameters.Add(pId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
+		});
 
 		// Execute command
 		await RunDelete(command);
@@ -95,13 +78,10 @@ public class FilesHandler : BaseHandler
 		command.CommandText = "SELECT id FROM media.files WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = id;
-
-		// Add parameters
-		command.Parameters.Add(pId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
+		});
 
 		// Execute command
 		return await RunExists(command);

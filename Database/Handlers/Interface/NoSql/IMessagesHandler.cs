@@ -1,6 +1,7 @@
-﻿using Database.Models.NoSql;
+﻿using Core.Helpers.Snowflake;
+using Database.Models.NoSql;
 
-namespace Database.Handlers.Defaults.NoSql;
+namespace Database.Handlers.Interface.NoSql;
 
 public record PagingToken(ulong LastSeen, Guid Channel);
 

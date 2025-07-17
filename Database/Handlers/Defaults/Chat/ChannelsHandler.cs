@@ -6,8 +6,7 @@ namespace Database.Handlers.Defaults.Chat;
 
 public class ChannelsHandler : BaseHandler
 {
-	public async Task<MChannel> Create(Guid guildId, string name, short? type = null, string? customisation = null,
-		string? config = null)
+	public async Task<MChannel> Create(Guid guildId, string name, short? type = null, string? customisation = null, string? config = null)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);

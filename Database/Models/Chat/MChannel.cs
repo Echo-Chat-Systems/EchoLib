@@ -1,6 +1,7 @@
 using System.Data;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Core.Helpers;
 
 namespace Database.Models.Chat;
 
