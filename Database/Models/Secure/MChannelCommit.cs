@@ -1,7 +1,6 @@
 using System.Data;
-using EchoLib.Auth.Signing;
 
-namespace EchoLib.Database.Models.Secure;
+namespace Database.Models.Secure;
 
 public class MChannelCommit(IDataRecord record) : BaseModel(record)
 {

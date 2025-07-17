@@ -1,9 +1,8 @@
 using System.Data;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using EchoLib.Helpers;
 
-namespace EchoLib.Database.Models.Chat;
+namespace Database.Models.Chat;
 
 public class MChannel(IDataRecord record) : BaseModel(record)
 {

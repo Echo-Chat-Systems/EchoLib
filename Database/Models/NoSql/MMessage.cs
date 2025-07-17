@@ -1,10 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using EchoLib.Auth.Signing;
-using EchoLib.Helpers;
-using EchoLib.Helpers.Snowflake;
 
-namespace EchoLib.Database.Models.NoSql;
+namespace Database.Models.NoSql;
 
 public class MMessage()
 {

@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace EchoLib.Database.Models.Secure;
+namespace Database.Models.Secure;
 
 public class MCertificate(IDataRecord record) : BaseModel(record)
 {

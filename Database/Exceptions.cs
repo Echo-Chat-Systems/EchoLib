@@ -1,6 +1,6 @@
 ﻿using System.Data.Common;
 
-namespace EchoLib.Database;
+namespace Database;
 
 public class DbException : Exception
 {

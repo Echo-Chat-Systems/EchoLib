@@ -1,7 +1,6 @@
 using System.Data;
-using EchoLib.Auth.Signing;
 
-namespace EchoLib.Database.Models.Public;
+namespace Database.Models.Public;
 
 public class MInvite(IDataRecord record) : BaseModel(record)
 {

@@ -1,7 +1,6 @@
 using System.Data;
-using EchoLib.Auth.Signing;
 
-namespace EchoLib.Database.Models.Media;
+namespace Database.Models.Media;
 
 public class MFile(IDataRecord record) : BaseModel(record)
 {

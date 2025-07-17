@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace EchoLib.Database.Models;
+namespace Database.Models;
 
 public class BaseModel (IDataRecord record)
 {

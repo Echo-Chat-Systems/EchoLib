@@ -1,7 +1,6 @@
 using System.Data;
-using EchoLib.Models.Permissions;
 
-namespace EchoLib.Database.Models.Public;
+namespace Database.Models.Public;
 
 public class MRole(IDataRecord record) : BaseModel(record)
 {

@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace EchoLib.Database.Models.Media;
+namespace Database.Models.Media;
 
 public class MGuildEmoji(IDataRecord record) : BaseModel(record)
 {

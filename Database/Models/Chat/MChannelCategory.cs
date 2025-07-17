@@ -1,7 +1,6 @@
 using System.Data;
-using EchoLib.Helpers;
 
-namespace EchoLib.Database.Models.Chat;
+namespace Database.Models.Chat;
 
 public class MChannelCategory(IDataRecord record) : BaseModel(record)
 {

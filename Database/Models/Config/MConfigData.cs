@@ -1,7 +1,7 @@
 using System.Data;
 using System.Data.SqlTypes;
 
-namespace EchoLib.Database.Models.Config;
+namespace Database.Models.Config;
 
 public class MConfigData(IDataRecord record)
 {

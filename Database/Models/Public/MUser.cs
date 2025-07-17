@@ -1,7 +1,8 @@
 using System.Data;
-using EchoLib.Auth.Signing;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-namespace EchoLib.Database.Models.Public;
+namespace Database.Models.Public;
 
 public class MUser(IDataRecord record) : BaseModel(record)
 {
@@ -20,7 +21,7 @@ public class MUser(IDataRecord record) : BaseModel(record)
 	/// </summary>
 	public int Tag { get; set; } = record.GetInt32(record.GetOrdinal("tag"));
 
-	public string ProfileRaw { get; set; } = record.GetString(record.GetOrdinal("profile"));
+	public string ProfileRaw { get; private set; } = record.GetString(record.GetOrdinal("profile"));
 
 	public byte[] EncryptedSettings { get; set; } = (byte[])record.GetValue(record.GetOrdinal("settings"));
 
@@ -29,4 +30,27 @@ public class MUser(IDataRecord record) : BaseModel(record)
 	public bool IsOnline { get; set; } = record.GetBoolean(record.GetOrdinal("is_online"));
 
 	public bool IsBanned { get; set; } = record.GetBoolean(record.GetOrdinal("is_banned"));
+
+	private MProfile? _profile;
+
+	public MProfile Profile
+	{
+		// Deserialise on first read attempt
+		get => (_profile ??= JsonSerializer.Deserialize<MProfile>(ProfileRaw, StaticOptions.JsonSerialzer))!;
+		set
+		{
+			_profile = value;
+			ProfileRaw = JsonSerializer.Serialize(value, StaticOptions.JsonSerialzer);
+		}
+	}
+
+	public class MProfile
+	{
+		[JsonPropertyName("pronouns")] public string? Pronouns { get; set; }
+		[JsonPropertyName("bio")] public string? Bio { get; set; }
+		[JsonPropertyName("css")] public string? Css { get; set; }
+		[JsonPropertyName("pfp")] public Uri? Pfp { get; set; }
+		[JsonPropertyName("banner")] public Uri? Banner { get; set; }
+		[JsonPropertyName("timezone")] public TimeZoneInfo? TimeZone { get; set; }
+	}
 }
