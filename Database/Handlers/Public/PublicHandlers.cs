@@ -1,7 +1,4 @@
-using EchoLib.Database.Handlers.Chat;
-using EchoLib.Database.Handlers.Public;
-
-namespace EchoLib.Database.Handlers.HandlerGroups;
+namespace EchoLib.Database.Handlers.Public;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class PublicHandlers

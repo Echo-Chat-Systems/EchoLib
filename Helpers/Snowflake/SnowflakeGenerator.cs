@@ -1,8 +1,8 @@
-﻿namespace EchoLib.Helpers;
+﻿namespace EchoLib.Helpers.Snowflake;
 
-public class Generator
+public class SnowflakeGenerator
 {
-	private static long Epoch = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero).ToUnixTimeMilliseconds();
+	public static readonly long Epoch = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero).ToUnixTimeMilliseconds();
 	private static readonly object Lock = new object();
 	
 	private static ushort _increment = 0;
@@ -35,7 +35,7 @@ public class Generator
 
 			_lastMs = ms;
 
-			return (ulong)((ms << 44) | ((ulong)ApiVersion << 16) | _increment);
+			return (ulong)(ms << 44) | ((ulong)ApiVersion << 16) | _increment;
 		}
 	}
 }

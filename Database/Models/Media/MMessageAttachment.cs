@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace EchoLib.Database.Models.Public;
+namespace EchoLib.Database.Models.Media;
 
 public class MMessageAttachment(IDataRecord record) : BaseModel(record)
 {

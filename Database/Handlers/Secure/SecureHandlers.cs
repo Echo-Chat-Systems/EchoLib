@@ -1,6 +1,4 @@
-using EchoLib.Database.Handlers.Secure;
-
-namespace EchoLib.Database.Handlers.HandlerGroups;
+namespace EchoLib.Database.Handlers.Secure;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class SecureHandlers

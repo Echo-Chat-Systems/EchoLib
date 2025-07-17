@@ -1,10 +1,7 @@
-﻿using EchoLib.Database.Handlers.Media;
-using EchoLib.Database.Handlers.Public;
-
-namespace EchoLib.Database.Handlers.HandlerGroups;
+﻿namespace EchoLib.Database.Handlers.Media;
 
 public class MediaHandlers
 {
 	public required FilesHandler Files { get; init; }
-	public required MessageAttachmentsHandler MessageAttachments { get; init; }
+	public required GuildEmojisHandler GuildEmojis { get; init; }
 }

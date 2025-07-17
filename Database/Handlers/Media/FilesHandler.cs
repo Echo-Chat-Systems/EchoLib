@@ -1,19 +1,17 @@
 using System.Data;
 using System.Data.Common;
 using EchoLib.Auth.Signing;
-using EchoLib.Database.Models.Public;
+using EchoLib.Database.Models.Media;
 
-namespace EchoLib.Database.Handlers.Public;
+namespace EchoLib.Database.Handlers.Media;
 
 public class FilesHandler : BaseHandler
 {
 	public async Task<MFile> Create(PublicSigningKey owner)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "INSERT INTO public.files VALUES (@owner) RETURNING *";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "INSERT INTO media.files VALUES (@owner) RETURNING *";
 
 		// Create parameters
 		DbParameter pOwner = command.CreateParameter();
@@ -21,33 +19,18 @@ public class FilesHandler : BaseHandler
 		pOwner.DbType = DbType.Guid;
 		pOwner.Value = owner.ToString();
 
-		// Add parameters to command
+		// Add parameters
 		command.Parameters.Add(pOwner);
 
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		
-		if (reader.RecordsAffected != 1)
-		{
-			goto Fail;
-		}
-		
-		if (await reader.ReadAsync())
-		{
-			await transaction.CommitAsync();
-			return new MFile(reader);
-		}
-		
-		Fail: 
-			await transaction.RollbackAsync();
-			throw new InsertFailedException(command);
+		return await RunModify(command, reader => new MFile(reader));
 	}
 
 	public async Task<MFile?> Get(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT * FROM public.files WHERE id = @id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT * FROM media.files WHERE id = @id";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -55,26 +38,18 @@ public class FilesHandler : BaseHandler
 		pId.DbType = DbType.Guid;
 		pId.Value = id;
 
-		// Add parameters to command
+		// Add parameters
 		command.Parameters.Add(pId);
 
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		if (await reader.ReadAsync())
-		{
-			return new MFile(reader);
-		}
-		
-		return null;
+		return await RunGet(command, reader => new MFile(reader));
 	}
 
 	public async Task<MFile> Update(MFile file)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "UPDATE public.files SET last_accessed = @last_accessed WHERE id = @id RETURNING *";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "UPDATE media.files SET last_accessed = @last_accessed WHERE id = @id RETURNING *";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -87,36 +62,19 @@ public class FilesHandler : BaseHandler
 		pLastAccessed.DbType = DbType.DateTime;
 		pLastAccessed.Value = file.LastAccessed; 
 			
-		// Add parameters to command
+		// Add parameters
 		command.Parameters.Add(pId);
 		command.Parameters.Add(pLastAccessed);
 
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		
-		if (reader.RecordsAffected != 1)
-		{
-			goto Fail;
-		}
-		
-		if (await reader.ReadAsync())
-		{
-			await transaction.CommitAsync();
-			return new MFile(reader);
-		}
-		
-		Fail: 
-			await transaction.RollbackAsync();
-			throw new UpdateFailedException(command);
+		return await RunModify(command, reader => new MFile(reader));
 	}
 
 	public async Task Delete(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "DELETE FROM public.files WHERE id = @id";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "DELETE FROM media.files WHERE id = @id";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -124,25 +82,18 @@ public class FilesHandler : BaseHandler
 		pId.DbType = DbType.Guid;
 		pId.Value = id;
 
-		// Add parameters to command
+		// Add parameters
 		command.Parameters.Add(pId);
 
 		// Execute command
-		int rowsAffected = await command.ExecuteNonQueryAsync();
-		if (rowsAffected == 0)
-		{
-			await transaction.RollbackAsync();
-			throw new DataException("Failed to delete file, no rows affected.");
-		}
-
-		await transaction.CommitAsync();
+		await RunDelete(command);
 	}
 
 	public async Task<bool> Exists(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT id FROM public.files WHERE id = @id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT id FROM media.files WHERE id = @id";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -150,12 +101,10 @@ public class FilesHandler : BaseHandler
 		pId.DbType = DbType.Guid;
 		pId.Value = id;
 
-		// Add parameters to command
+		// Add parameters
 		command.Parameters.Add(pId);
 
 		// Execute command
-		object? result = await command.ExecuteScalarAsync();
-		
-		return result != null;
+		return await RunExists(command);
 	}
 }

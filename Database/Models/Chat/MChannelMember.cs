@@ -1,8 +1,7 @@
 using System.Data;
 using EchoLib.Auth.Signing;
-using EchoLib.Models.Permissions;
 
-namespace EchoLib.Database.Models.Public;
+namespace EchoLib.Database.Models.Chat;
 
 public class MChannelMember(IDataRecord record) : BaseModel(record)
 {

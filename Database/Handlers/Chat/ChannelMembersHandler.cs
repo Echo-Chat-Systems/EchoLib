@@ -1,19 +1,17 @@
 using System.Data;
 using System.Data.Common;
 using EchoLib.Auth.Signing;
-using EchoLib.Database.Models.Public;
+using EchoLib.Database.Models.Chat;
 
-namespace EchoLib.Database.Handlers.Public;
+namespace EchoLib.Database.Handlers.Chat;
 
 public class ChannelMembersHandler : BaseHandler
 {
 	public async Task<MChannelMember> Create(PublicSigningKey userId, Guid channelId, long permissions)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "INSERT INTO public.channel_members VALUES (@user_id, @channel_id, @permissions)";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "INSERT INTO chat.channel_members VALUES (@user_id, @channel_id, @permissions)";
 
 		// Create parameters
 		DbParameter pUserId = command.CreateParameter();
@@ -37,25 +35,14 @@ public class ChannelMembersHandler : BaseHandler
 		command.Parameters.Add(pPermissions);
 
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		if (reader.RecordsAffected != 1) goto Fail;
-		
-		if (await reader.ReadAsync())
-		{
-			await transaction.CommitAsync();
-			return new MChannelMember(reader);
-		}
-
-		Fail:
-		await transaction.RollbackAsync();
-		throw new InsertFailedException(command);
+		return await RunModify(command, reader => new MChannelMember(reader));
 	}
 
 	public async Task<MChannelMember?> Get(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT * FROM public.channel_members WHERE id = @id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT * FROM chat.channel_members WHERE id = @id";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -67,21 +54,15 @@ public class ChannelMembersHandler : BaseHandler
 		command.Parameters.Add(pId);
 
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		if (await reader.ReadAsync())
-		{
-			return new MChannelMember(reader);
-		}
-
-		return null; // Return null if no member found
+		return await RunGet(command, reader => new MChannelMember(reader));
 	}
 
 	public async Task<MChannelMember?> Get(PublicSigningKey userId, Guid channelId)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
+		await using DbCommand command = await Command(false);
 		command.CommandText =
-			"SELECT * FROM public.channel_members WHERE user_id = @user_id AND channel_id = @channel_id";
+			"SELECT * FROM chat.channel_members WHERE user_id = @user_id AND channel_id = @channel_id";
 
 		// Create parameters
 		DbParameter pUserId = command.CreateParameter();
@@ -99,23 +80,15 @@ public class ChannelMembersHandler : BaseHandler
 		command.Parameters.Add(pChannelId);
 
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		if (await reader.ReadAsync())
-		{
-			return new MChannelMember(reader);
-		}
-
-		return null; // Return null if no member found
+		return await RunGet(command, reader => new MChannelMember(reader));
 	}
 
 	public async Task<MChannelMember> Update(MChannelMember channelMember)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
+		await using DbCommand command = await Command(true);
 		command.CommandText =
-			"UPDATE public.channel_members SET permissions = @permissions WHERE user_id = @user_id AND channel_id = @channel_id RETURNING *";
+			"UPDATE chat.channel_members SET permissions = @permissions WHERE user_id = @user_id AND channel_id = @channel_id RETURNING *";
 
 		// Create parameters
 		DbParameter pUserId = command.CreateParameter();
@@ -139,30 +112,14 @@ public class ChannelMembersHandler : BaseHandler
 		command.Parameters.Add(pPermissions);
 
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		if (reader.RecordsAffected != 1)
-		{
-			goto Fail; // If no rows were affected, rollback and throw an exception
-		}
-
-		if (await reader.ReadAsync())
-		{
-			await transaction.CommitAsync();
-			return new MChannelMember(reader);
-		}
-
-		Fail:
-		await transaction.RollbackAsync();
-		throw new UpdateFailedException(command);
+		return await RunModify(command, reader => new MChannelMember(reader));
 	}
 
 	public async Task Delete(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "DELETE FROM public.channel_members WHERE id = @id";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "DELETE FROM chat.channel_members WHERE id = @id";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -174,24 +131,15 @@ public class ChannelMembersHandler : BaseHandler
 		command.Parameters.Add(pId);
 
 		// Execute command
-		int rows = await command.ExecuteNonQueryAsync();
-		if (rows != 1)
-		{
-			await transaction.RollbackAsync();
-			throw new DeleteFailedException(command);
-		}
-		
-		await transaction.CommitAsync();
+		await RunDelete(command);
 	}
 
 	public async Task Delete(PublicSigningKey userId, Guid channelId)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
+		await using DbCommand command = await Command(true);
 		command.CommandText =
-			"DELETE FROM public.channel_members WHERE user_id = @user_id AND channel_id = @channel_id";
+			"DELETE FROM chat.channel_members WHERE user_id = @user_id AND channel_id = @channel_id";
 
 		// Create parameters
 		DbParameter pUserId = command.CreateParameter();
@@ -209,21 +157,14 @@ public class ChannelMembersHandler : BaseHandler
 		command.Parameters.Add(pChannelId);
 
 		// Execute command
-		int rows = await command.ExecuteNonQueryAsync();
-		if (rows != 1)
-		{
-			await transaction.RollbackAsync();
-			throw new DeleteFailedException(command);
-		}
-		
-		await transaction.CommitAsync();
+		await RunDelete(command);
 	}
 
 	public async Task<bool> Exists(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT COUNT(*) FROM public.channel_members WHERE id = @id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT id FROM chat.channel_members WHERE id = @id";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -235,21 +176,15 @@ public class ChannelMembersHandler : BaseHandler
 		command.Parameters.Add(pId);
 
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		if (await reader.ReadAsync())
-		{
-			return reader.GetInt32(0) > 0; // Return true if count is greater than 0
-		}
-
-		return false; // Return false if no member found
+		return await RunExists(command);
 	}
 
 	public async Task<bool> Exists(PublicSigningKey userId, Guid channelId)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
+		await using DbCommand command = await Command(false);
 		command.CommandText =
-			"SELECT id FROM public.channel_members WHERE user_id = @user_id AND channel_id = @channel_id";
+			"SELECT id FROM chat.channel_members WHERE user_id = @user_id AND channel_id = @channel_id";
 
 		// Create parameters
 		DbParameter pUserId = command.CreateParameter();
@@ -267,8 +202,6 @@ public class ChannelMembersHandler : BaseHandler
 		command.Parameters.Add(pChannelId);
 
 		// Execute command
-		object? result = await command.ExecuteScalarAsync();
-
-		return result != null;
+		return await RunExists(command);
 	}
 }

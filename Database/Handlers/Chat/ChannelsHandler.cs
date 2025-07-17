@@ -1,8 +1,8 @@
 using System.Data;
 using System.Data.Common;
-using EchoLib.Database.Models.Public;
+using EchoLib.Database.Models.Chat;
 
-namespace EchoLib.Database.Handlers.Public;
+namespace EchoLib.Database.Handlers.Chat;
 
 public class ChannelsHandler : BaseHandler
 {
@@ -10,10 +10,8 @@ public class ChannelsHandler : BaseHandler
 		string? config = null)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "INSERT INTO public.channels VALUES (@guild_id, @name, @type, @customisation, @config) RETURNING *";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "INSERT INTO chat.channels VALUES (@guild_id, @name, @type, @customisation, @config) RETURNING *";
 		
 		// Create parameters
 		DbParameter pGuildId = command.CreateParameter();
@@ -52,27 +50,14 @@ public class ChannelsHandler : BaseHandler
 		command.Parameters.Add(pConfig);
 		
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		if (reader.RecordsAffected != 1)
-		{
-			goto Fail;
-		}
-		if (await reader.ReadAsync())
-		{
-			await transaction.CommitAsync();
-			return new MChannel(reader);
-		}
-		
-		Fail:
-			await transaction.RollbackAsync();
-			throw new InsertFailedException(command);
+		return await RunModify(command, reader => new MChannel(reader));
 	}
 
 	public async Task<MChannel?> Get(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT * FROM public.channels WHERE Id = @id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT * FROM chat.channels WHERE Id = @id";
 		
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -84,22 +69,14 @@ public class ChannelsHandler : BaseHandler
 		command.Parameters.Add(pId);
 		
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		if (await reader.ReadAsync())
-		{
-			return new MChannel(reader);
-		}
-
-		return null;
+		return await RunGet(command, reader => new MChannel(reader));
 	}
 
 	public async Task<MChannel> Update(MChannel mChannel)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "UPDATE public.channels SET guild_id = @guild_id, Name = @name, Type = @type, Customisation = @customisation, Config = @config WHERE Id = @id RETURNING *";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "UPDATE chat.channels SET guild_id = @guild_id, Name = @name, Type = @type, Customisation = @customisation, Config = @config WHERE Id = @id RETURNING *";
 		
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -144,31 +121,14 @@ public class ChannelsHandler : BaseHandler
 		command.Parameters.Add(pConfig);
 		
 		// Execute command
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		
-		if (reader.RecordsAffected != 1)
-		{
-			goto Fail;
-		}
-
-		if (await reader.ReadAsync())
-		{
-			await transaction.CommitAsync();
-			return new MChannel(reader);
-		}
-
-		Fail:
-			await transaction.RollbackAsync();
-			throw new UpdateFailedException(command);
+		return await RunModify(command, reader => new MChannel(reader));
 	}
 
 	public async Task Delete(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "DELETE FROM public.channels WHERE Id = @id";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "DELETE FROM chat.channels WHERE Id = @id";
 		
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -180,22 +140,14 @@ public class ChannelsHandler : BaseHandler
 		command.Parameters.Add(pId);
 		
 		// Execute command
-		int rowsAffected = await command.ExecuteNonQueryAsync();
-
-		if (rowsAffected == 0)
-		{
-			await transaction.RollbackAsync();
-			throw new DeleteFailedException(command);
-		}
-		
-		await transaction.CommitAsync();
+		await RunDelete(command);
 	}
 
 	public async Task<bool> Exists(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT id FROM public.channels WHERE Id = @id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT id FROM chat.channels WHERE Id = @id";
 		
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -207,8 +159,6 @@ public class ChannelsHandler : BaseHandler
 		command.Parameters.Add(pId);
 		
 		// Execute command
-		object? result = await command.ExecuteScalarAsync();
-		
-		return result != null;
+		return await RunExists(command);
 	}
 }

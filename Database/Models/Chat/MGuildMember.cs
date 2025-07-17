@@ -1,7 +1,7 @@
 using System.Data;
 using EchoLib.Auth.Signing;
 
-namespace EchoLib.Database.Models.Public;
+namespace EchoLib.Database.Models.Chat;
 
 public class MGuildMember (IDataRecord record) : BaseModel(record)
 {

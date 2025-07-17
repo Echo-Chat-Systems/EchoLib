@@ -1,7 +1,4 @@
-using System.Data.Common;
-using EchoLib.Database.Handlers.Config;
-
-namespace EchoLib.Database.Handlers.HandlerGroups;
+namespace EchoLib.Database.Handlers.Config;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class ConfigHandlers

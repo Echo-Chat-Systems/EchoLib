@@ -1,9 +1,7 @@
 using System.Data;
-using EchoLib.Auth.Signing;
 using EchoLib.Helpers;
-using EchoLib.Models.Other;
 
-namespace EchoLib.Database.Models.Public;
+namespace EchoLib.Database.Models.Chat;
 
 public class MChannelCategory(IDataRecord record) : BaseModel(record)
 {

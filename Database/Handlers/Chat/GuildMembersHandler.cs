@@ -1,9 +1,9 @@
 using System.Data;
 using System.Data.Common;
 using EchoLib.Auth.Signing;
-using EchoLib.Database.Models.Public;
+using EchoLib.Database.Models.Chat;
 
-namespace EchoLib.Database.Handlers.Public;
+namespace EchoLib.Database.Handlers.Chat;
 
 public class GuildMembersHandler : BaseHandler
 {
@@ -11,11 +11,9 @@ public class GuildMembersHandler : BaseHandler
 		string? customisation = null)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
+		await using DbCommand command = await Command(true);
 		command.CommandText =
-			"INSERT INTO public.guild_members VALUES (@guild_id, @user_id, @nickname, @customisation) RETURNING *";
+			"INSERT INTO chat.guild_members VALUES (@guild_id, @user_id, @nickname, @customisation) RETURNING *";
 
 		// Create parameters
 		DbParameter pGuildId = command.CreateParameter();
@@ -38,31 +36,21 @@ public class GuildMembersHandler : BaseHandler
 		pCustomisation.DbType = DbType.String;
 		pCustomisation.Value = customisation ?? string.Empty;
 
+		// Add parameters
 		command.Parameters.Add(pGuildId);
 		command.Parameters.Add(pUserId);
 		command.Parameters.Add(pNickname);
 		command.Parameters.Add(pCustomisation);
 
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-
-		if (reader.RecordsAffected != 1) goto Fail;
-
-		if (await reader.ReadAsync())
-		{
-			await transaction.CommitAsync();
-			return new MGuildMember(reader);
-		}
-
-		Fail:
-		await transaction.RollbackAsync();
-		throw new InsertFailedException(command);
+		// Execute command
+		return await RunModify(command, reader => new MGuildMember(reader));
 	}
 
 	public async Task<MGuildMember?> Get(Guid guildId, PublicSigningKey userId)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT * FROM public.guild_members WHERE guild_id = @guild_id AND user_id = @user_id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT * FROM chat.guild_members WHERE guild_id = @guild_id AND user_id = @user_id";
 
 		// Create parameters
 		DbParameter pGuildId = command.CreateParameter();
@@ -75,47 +63,39 @@ public class GuildMembersHandler : BaseHandler
 		pUserId.DbType = DbType.String;
 		pUserId.Value = userId.ToString();
 
+		// Add parameters
 		command.Parameters.Add(pGuildId);
 		command.Parameters.Add(pUserId);
 
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-
-		if (await reader.ReadAsync())
-			return new MGuildMember(reader);
-
-		return null;
+		// Execute command
+		return await RunGet(command, reader => new MGuildMember(reader));
 	}
 
 	public async Task<MGuildMember?> Get(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT * FROM public.guild_members WHERE id = @id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT * FROM chat.guild_members WHERE id = @id";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
 		pId.ParameterName = "@id";
 		pId.DbType = DbType.Guid;
 		pId.Value = id;
-
+		
+		// Add parameters
 		command.Parameters.Add(pId);
 
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-
-		if (await reader.ReadAsync())
-			return new MGuildMember(reader);
-
-		return null;
+		// Execute command
+		return await RunGet(command, reader => new MGuildMember(reader));
 	}
 
 	public async Task<MGuildMember> Update(MGuildMember member)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
+		await using DbCommand command = await Command(true);
 		command.CommandText =
-			"UPDATE public.guild_members SET guild_id = @guild_id, user_id = @user_id, nickname = @nickname, customisation_override = @customisation WHERE id = @id RETURNING *";
+			"UPDATE chat.guild_members SET guild_id = @guild_id, user_id = @user_id, nickname = @nickname, customisation = @customisation WHERE id = @id RETURNING *";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -142,35 +122,23 @@ public class GuildMembersHandler : BaseHandler
 		pCustomisation.ParameterName = "@customisation";
 		pCustomisation.DbType = DbType.String;
 		pCustomisation.Value = member.CustomisationOverrideRaw;
-
+		
+		// Add parameters
 		command.Parameters.Add(pId);
 		command.Parameters.Add(pGuildId);
 		command.Parameters.Add(pUserId);
 		command.Parameters.Add(pNickname);
 		command.Parameters.Add(pCustomisation);
 
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-
-		if (reader.RecordsAffected != 1) goto Fail;
-
-		if (await reader.ReadAsync())
-		{
-			await transaction.CommitAsync();
-			return new MGuildMember(reader);
-		}
-
-		Fail:
-		await transaction.RollbackAsync();
-		throw new UpdateFailedException(command);
+		// Execute command
+		return await RunModify(command, reader => new MGuildMember(reader));
 	}
 
 	public async Task Delete(Guid guildId, PublicSigningKey userId)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "DELETE FROM public.guild_members WHERE guild_id = @guild_id AND user_id = @user_id";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "DELETE FROM chat.guild_members WHERE guild_id = @guild_id AND user_id = @user_id";
 
 		// Create parameters
 		DbParameter pGuildId = command.CreateParameter();
@@ -183,27 +151,19 @@ public class GuildMembersHandler : BaseHandler
 		pUserId.DbType = DbType.String;
 		pUserId.Value = userId.ToString();
 
+		// Add parameters
 		command.Parameters.Add(pGuildId);
 		command.Parameters.Add(pUserId);
 
-		int affectedRows = await command.ExecuteNonQueryAsync();
-
-		if (affectedRows != 1)
-		{
-			await transaction.RollbackAsync();
-			throw new DeleteFailedException(command);
-		}
-
-		await transaction.CommitAsync();
+		// Execute command
+		await RunDelete(command);
 	}
 
 	public async Task Delete(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		await using DbTransaction transaction = await command.Connection!.BeginTransactionAsync();
-		command.Transaction = transaction;
-		command.CommandText = "DELETE FROM public.guild_members WHERE id = @id";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "DELETE FROM chat.guild_members WHERE id = @id";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -211,24 +171,18 @@ public class GuildMembersHandler : BaseHandler
 		pId.DbType = DbType.Guid;
 		pId.Value = id;
 
+		// Execute command
 		command.Parameters.Add(pId);
 
-		int affectedRows = await command.ExecuteNonQueryAsync();
-
-		if (affectedRows != 1)
-		{
-			await transaction.RollbackAsync();
-			throw new DeleteFailedException(command);
-		}
-
-		await transaction.CommitAsync();
+		// Execute command
+		await RunDelete(command);
 	}
 
 	public async Task<bool> Exists(Guid guildId, PublicSigningKey userId)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT id FROM public.guild_members WHERE guild_id = @guild_id AND user_id = @user_id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT id FROM chat.guild_members WHERE guild_id = @guild_id AND user_id = @user_id";
 
 		// Create parameters
 		DbParameter pGuildId = command.CreateParameter();
@@ -241,19 +195,19 @@ public class GuildMembersHandler : BaseHandler
 		pUserId.DbType = DbType.String;
 		pUserId.Value = userId.ToString();
 
+		// Add parameters
 		command.Parameters.Add(pGuildId);
 		command.Parameters.Add(pUserId);
 
-		object? result = await command.ExecuteScalarAsync();
-
-		return result != null;
+		// Execute command
+		return await RunExists(command);
 	}
 
 	public async Task<bool> Exists(Guid id)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT id FROM public.guild_members WHERE id = @id";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT id FROM chat.guild_members WHERE id = @id";
 
 		// Create parameters
 		DbParameter pId = command.CreateParameter();
@@ -261,10 +215,10 @@ public class GuildMembersHandler : BaseHandler
 		pId.DbType = DbType.Guid;
 		pId.Value = id;
 
+		// Add parmeters
 		command.Parameters.Add(pId);
 
-		object? result = await command.ExecuteScalarAsync();
-
-		return result != null;
+		// Execute command
+		return await RunExists(command);
 	}
 }

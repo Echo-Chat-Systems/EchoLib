@@ -1,71 +1,70 @@
 using System.Data.Common;
 
-namespace EchoLib.Database.Handlers.Defaults.Config;
+namespace EchoLib.Database.Handlers.Config;
 
 public class OwnersHandler : BaseHandler
 {
 	public async Task Add(Guid ownerId)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "INSERT INTO config.owners (user_id) VALUES (@OwnerId)";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "INSERT INTO config.owners VALUES (@owner_id)";
 
 		// Create parameters
 		DbParameter pOwnerId = command.CreateParameter();
-		pOwnerId.ParameterName = "@OwnerId";
+		pOwnerId.ParameterName = "@owner_id";
 		pOwnerId.DbType = System.Data.DbType.Guid;
 		pOwnerId.Value = ownerId;
 
-		// Add parameters to command
+		// Add parameters
 		command.Parameters.Add(pOwnerId);
-		
+
 		// Execute command
-		await command.ExecuteNonQueryAsync();
+		await RunModify<object?>(command, _ => null);
 	}
 
 	public async Task Remove(Guid ownerId)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "DELETE FROM config.owners WHERE user_id = @OwnerId";
+		await using DbCommand command = await Command(true);
+		command.CommandText = "DELETE FROM config.owners WHERE user_id = @owner_id";
 
 		// Create parameters
 		DbParameter pOwnerId = command.CreateParameter();
-		pOwnerId.ParameterName = "@OwnerId";
+		pOwnerId.ParameterName = "@owner_id";
 		pOwnerId.DbType = System.Data.DbType.Guid;
 		pOwnerId.Value = ownerId;
 
-		// Add parameters to command
+		// Add parameters
 		command.Parameters.Add(pOwnerId);
 
-		await command.ExecuteNonQueryAsync();
+		// Execute command
+		await RunDelete(command);
 	}
 
 	public async Task<bool> Exists(Guid ownerId)
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
-		command.CommandText = "SELECT user_id FROM config.owners WHERE user_id = @OwnerId";
+		await using DbCommand command = await Command(false);
+		command.CommandText = "SELECT user_id FROM config.owners WHERE user_id = @owner_id";
 
 		// Create parameters
 		DbParameter pOwnerId = command.CreateParameter();
-		pOwnerId.ParameterName = "@OwnerId";
+		pOwnerId.ParameterName = "@owner_id";
 		pOwnerId.DbType = System.Data.DbType.Guid;
 		pOwnerId.Value = ownerId;
 
-		// Add parameters to command
+		// Add parameters
 		command.Parameters.Add(pOwnerId);
 
 		// Get result
-		object? result = await command.ExecuteScalarAsync();
-		
-		return result != null;
+		return await RunExists(command);
 	}
 
 	public async Task<List<Guid>> GetAll()
 	{
 		// Create command
-		await using DbCommand command = DataSource.CreateCommand();
+		await using DbCommand command = await Command(false);
 		command.CommandText = "SELECT * FROM config.owners";
 
 		// Get result

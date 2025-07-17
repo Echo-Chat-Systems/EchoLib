@@ -11,7 +11,11 @@ namespace EchoLib.Auth;
 ///
 /// All user files are encrypted with AES 256 using a user-provided password.
 /// </summary>
-public class UserFile : KeySet
+public class UserFile
 {
-	public ServerInfo Server { get; set; }
+	[JsonPropertyName("keys")]
+	public required KeySet Keys { get; set; } 
+	
+	[JsonPropertyName("server")]
+	public required ServerInfo Server { get; set; }
 }

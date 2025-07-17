@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace EchoLib.Database.Models.Public;
+namespace EchoLib.Database.Models.Chat;
 
 public class MGuild(IDataRecord record) : BaseModel(record)
 {

@@ -1,7 +1,7 @@
 using EchoLib.Auth.Signing;
 using EchoLib.Database.Models.Public;
 
-namespace EchoLib.Database.Handlers.Defaults.Public;
+namespace EchoLib.Database.Handlers.Public;
 
 public abstract class UserRolesHandler : BaseHandler
 {

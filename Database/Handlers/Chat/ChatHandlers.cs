@@ -1,6 +1,4 @@
-﻿using EchoLib.Database.Handlers.Chat;
-
-namespace EchoLib.Database.Handlers.HandlerGroups;
+﻿namespace EchoLib.Database.Handlers.Chat;
 
 public class ChatHandlers
 {
