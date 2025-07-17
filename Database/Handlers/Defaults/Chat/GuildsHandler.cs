@@ -31,13 +31,10 @@ public class GuildsHandler : BaseHandler
 		command.CommandText = "SELECT * FROM chat.guilds WHERE id = @id";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = id;
-
-		// Add parameters
-		command.Parameters.Add(pId);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@id", new Parameter { Type = DbType.String, Value = id } }
+		});
 
 		// Execute command
 		return await RunGet(command, reader => new MGuild(reader));
@@ -47,28 +44,15 @@ public class GuildsHandler : BaseHandler
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
-		command.CommandText = "UPDATE chat.guilds SET name = @name, customisation = @customisation WHERE id = @id RETURNING *";
+		command.CommandText = "UPDATE chat.guilds SET owner_id = @owner, name = @name, customisation = @customisation WHERE id = @id RETURNING *";
 
 		// Create parameters
-		DbParameter pId = command.CreateParameter();
-		pId.ParameterName = "@id";
-		pId.DbType = DbType.Guid;
-		pId.Value = guild.Id;
-
-		DbParameter pName = command.CreateParameter();
-		pName.ParameterName = "@name";
-		pName.DbType = DbType.String;
-		pName.Value = guild.Name;
-
-		DbParameter pCustomisation = command.CreateParameter();
-		pCustomisation.ParameterName = "@customisation";
-		pCustomisation.DbType = DbType.String;
-		pCustomisation.Value = guild.CustomisationRaw;
-
-		// Add parameters
-		command.Parameters.Add(pId);
-		command.Parameters.Add(pName);
-		command.Parameters.Add(pCustomisation);
+		AddParams(command, new Dictionary<string, Parameter>
+		{
+			{ "@owner", new Parameter { Type = DbType.String, Value = guild.OwnerId } },
+			{ "@name", new Parameter { Type = DbType.String, Value = guild.Name } },
+			{ "@customisation", new Parameter { Type = DbType.String, Value = guild.CustomisationRaw, Nullable = true } }
+		});
 
 		// Execute command
 		return await RunModify(command, reader => new MGuild(reader));
