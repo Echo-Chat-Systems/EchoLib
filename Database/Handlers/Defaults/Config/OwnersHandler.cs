@@ -1,5 +1,6 @@
 using System.Data;
 using System.Data.Common;
+using Core.Helpers.Snowflake;
 
 namespace Database.Handlers.Defaults.Config;
 
@@ -53,7 +54,7 @@ public class OwnersHandler : BaseHandler
 		return await RunExists(command);
 	}
 
-	public async Task<List<Guid>> GetAll()
+	public async Task<List<Snowflake>> GetAll()
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -62,10 +63,10 @@ public class OwnersHandler : BaseHandler
 		// Execute command
 		DbDataReader result = await command.ExecuteReaderAsync();
 
-		List<Guid> ids = new();
+		List<Snowflake> ids = new();
 		while (await result.ReadAsync())
 		{
-			ids.Add(result.GetGuid(0));
+			ids.Add(new Snowflake((ulong)result.GetInt64(0)));
 		}
 
 		return ids;

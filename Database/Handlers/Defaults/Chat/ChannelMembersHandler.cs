@@ -1,11 +1,12 @@
 using System.Data;
 using System.Data.Common;
 using Core.Auth.Signing;
+using Database.Handlers.Interface;
 using Database.Models.Chat;
 
 namespace Database.Handlers.Defaults.Chat;
 
-public class ChannelMembersHandler : BaseHandler
+public class ChannelMembersHandler : BaseHandler, IChannelMembersHandler
 {
 	public async Task<MChannelMember> Create(UserId userId, Guid channelId, long permissions)
 	{

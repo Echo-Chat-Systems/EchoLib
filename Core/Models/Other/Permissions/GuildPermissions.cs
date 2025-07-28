@@ -1,4 +1,4 @@
-namespace Core.Models.Permissions;
+namespace Core.Models.Other.Permissions;
 
 /// <summary>
 /// Guild permissions.

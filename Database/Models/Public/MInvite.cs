@@ -1,12 +1,13 @@
 using System.Data;
 using Core.Auth.Signing;
+using Core.Helpers.Snowflake;
 
 namespace Database.Models.Public;
 
 public class MInvite(IDataRecord record) : BaseModel(record)
 {
-	public Guid GuildId { get; set; } = record.GetGuid(record.GetOrdinal("guild_id"));
-	public Guid ChannelId { get; set; } = record.GetGuid(record.GetOrdinal("channel_id"));
+	public Snowflake GuildId { get; set; } = new(record.GetInt64(record.GetOrdinal("guild_id")));
+	public Snowflake ChannelId { get; set; } = new(record.GetInt64(record.GetOrdinal("channel_id")));
 	public string CreatedBy { get; } = record.GetString(record.GetOrdinal("inviter_id"));
 	public int Uses { get; set; } = record.GetInt32(record.GetOrdinal("uses"));
 	public string CustomisationRaw { get; set; } = record.GetString(record.GetOrdinal("customisation"));

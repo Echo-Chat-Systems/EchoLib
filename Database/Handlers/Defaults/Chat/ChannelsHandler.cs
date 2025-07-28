@@ -1,10 +1,11 @@
 using System.Data;
 using System.Data.Common;
+using Database.Handlers.Interface;
 using Database.Models.Chat;
 
 namespace Database.Handlers.Defaults.Chat;
 
-public class ChannelsHandler : BaseHandler
+public class ChannelsHandler : BaseHandler, IChannelsHandler
 {
 	public async Task<MChannel> Create(Guid guildId, string name, short? type = null, string? customisation = null, string? config = null)
 	{

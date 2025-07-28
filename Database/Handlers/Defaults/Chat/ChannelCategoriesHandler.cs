@@ -1,14 +1,13 @@
 using System.Data;
 using System.Data.Common;
+using Database.Handlers.Interface;
 using Database.Models.Chat;
 
 namespace Database.Handlers.Defaults.Chat;
 
-public class ChannelCategoriesHandler : BaseHandler
+public class ChannelCategoriesHandler : BaseHandler, IChannelCategoriesHandler
 {
-	public async Task<MChannelCategory> Create(Guid guildId, string name, short? type = null,
-		string? customisation = null,
-		string? config = null)
+	public async Task<MChannelCategory> Create(Guid guildId, string name, short? type = null, string? customisation = null, string? config = null)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);

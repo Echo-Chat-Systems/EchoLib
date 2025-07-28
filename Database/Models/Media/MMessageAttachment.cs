@@ -1,9 +1,10 @@
 using System.Data;
+using Core.Helpers.Snowflake;
 
 namespace Database.Models.Media;
 
 public class MMessageAttachment(IDataRecord record) : BaseModel(record)
 {
-	public Guid MessageId { get; } = record.GetGuid(record.GetOrdinal("message_id"));
-	public Guid FileId { get; } = record.GetGuid(record.GetOrdinal("file_id"));
+	public Snowflake MessageId { get; } = new(record.GetInt64(record.GetOrdinal("message_id")));
+	public Snowflake FileId { get; } = new(record.GetInt64(record.GetOrdinal("file_id")));
 }

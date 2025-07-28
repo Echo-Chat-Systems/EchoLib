@@ -3,8 +3,16 @@ using Core.Auth.Signing;
 
 namespace Database.Models.Media;
 
-public class MFile(IDataRecord record) : BaseModel(record)
+public class MFile : BaseModel
 {
-	public DateTime LastAccessed { get; } = record.GetDateTime(record.GetOrdinal("last_accessed"));
-	public UserId UserId { get; } = new(record.GetString(record.GetOrdinal("created_by")));
+
+	/// <inheritdoc />
+	public MFile(IDataRecord record) : base(record)
+	{
+		LastAccessed = record.GetDateTime(record.GetOrdinal("last_accessed"));
+		UserId = new UserId(record.GetString(record.GetOrdinal("created_by")));
+	}
+
+	public DateTime LastAccessed { get; set; }
+	public UserId UserId { get; init; }
 }

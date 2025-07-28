@@ -10,7 +10,7 @@ public class SnowflakeGenerator
 	
 	public byte ApiVersion { get; set; } = 1;
 	
-	public ulong New()
+	public Snowflake New()
 	{
 		lock (Lock)
 		{
@@ -35,7 +35,7 @@ public class SnowflakeGenerator
 
 			_lastMs = ms;
 
-			return (ulong)(ms << 44) | ((ulong)ApiVersion << 16) | _increment;
+			return new Snowflake((ulong)(ms << 44) | ((ulong)ApiVersion << 16) | _increment);
 		}
 	}
 }

@@ -1,11 +1,12 @@
 using System.Data;
 using System.Data.Common;
 using Core.Auth.Signing;
+using Database.Handlers.Interface;
 using Database.Models.Chat;
 
 namespace Database.Handlers.Defaults.Chat;
 
-public class GuildMembersHandler : BaseHandler
+public class GuildMembersHandler : BaseHandler, IGuildMembersHandler
 {
 	public async Task<MGuildMember> Create(Guid guildId, UserId userId, string? nickname = null, string? customisation = null)
 	{

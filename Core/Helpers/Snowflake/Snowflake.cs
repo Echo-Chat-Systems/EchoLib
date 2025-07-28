@@ -16,4 +16,8 @@ public class Snowflake
 		ApiVersion = (byte)((snowflake >> 16) & 0xF);
 		Increment = snowflake & 0xFFFF;
 	}
+
+	public Snowflake(long snowflake) : this((ulong)snowflake)
+	{
+	}
 }

@@ -1,16 +1,27 @@
 using System.Data;
+using Core.Helpers;
+using Core.Helpers.Snowflake;
 
 namespace Database.Models;
 
-public class BaseModel (IDataRecord record)
+public class BaseModel
 {
 	/// <summary>
 	/// Item database id.
 	/// </summary>
-	public Guid Id { get; } = record.GetGuid(record.GetOrdinal("id"));
+	public Snowflake Id { get; init; }
 
 	/// <summary>
-	/// Row created at.
+	/// Initialise a model from a record.
 	/// </summary>
-	public DateTime CreatedAt { get; } = record.GetDateTime(record.GetOrdinal("created_at"));
+	/// <param name="record">Record.</param>
+	protected BaseModel(IDataRecord record)
+	{
+		Id = new Snowflake(record.GetInt64(record.GetOrdinal("id")));
+	}
+
+	/// <summary>
+	/// Initialise a new model.
+	/// </summary>
+	protected BaseModel() => Id = StaticOptions.SnowflakeGenerator.New();
 }
