@@ -1,5 +1,6 @@
 namespace Database.Handlers.Interface;
 
-public interface ICertificatesHandler
+public interface IHookUsersHandler
 {
+
 }

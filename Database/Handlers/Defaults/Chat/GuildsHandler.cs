@@ -1,10 +1,11 @@
 using System.Data;
 using System.Data.Common;
+using Database.Handlers.Interface;
 using Database.Models.Chat;
 
 namespace Database.Handlers.Defaults.Chat;
 
-public class GuildsHandler : BaseHandler
+public class GuildsHandler : BaseHandler, IGuildsHandler
 {
 	public async Task<MGuild> Create(string owner, string name, string? customisation = null)
 	{

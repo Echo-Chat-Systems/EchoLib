@@ -1,10 +1,11 @@
 using System.Data;
 using System.Data.Common;
+using Database.Handlers.Interface;
 using Database.Models.Media;
 
 namespace Database.Handlers.Defaults.Media;
 
-public class FilesHandler : BaseHandler
+public class FilesHandler : BaseHandler, IFilesHandler
 {
 	public async Task<MFile> Create(string owner)
 	{

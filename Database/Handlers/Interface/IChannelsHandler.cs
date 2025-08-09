@@ -1,3 +1,4 @@
+using Database.Models;
 using Database.Models.Chat;
 
 namespace Database.Handlers.Interface;

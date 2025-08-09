@@ -1,6 +1,7 @@
 using System.Data;
 using System.Data.Common;
 using Database.Handlers.Interface;
+using Database.Models;
 using Database.Models.Chat;
 
 namespace Database.Handlers.Defaults.Chat;

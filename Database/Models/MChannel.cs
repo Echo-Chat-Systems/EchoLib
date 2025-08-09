@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 using Core.Helpers;
 using Core.Helpers.Snowflake;
 
-namespace Database.Models.Chat;
+namespace Database.Models;
 
 public class MChannel : BaseModel
 {

@@ -18,6 +18,8 @@
 
     <ItemGroup>
       <Folder Include="Handlers\Defaults\NoSql\" />
+      <Folder Include="Models\Base\" />
+      <Folder Include="Models\Chat\" />
     </ItemGroup>
 
 </Project>

@@ -17,4 +17,8 @@
       <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Crypto\" />
+    </ItemGroup>
+
 </Project>

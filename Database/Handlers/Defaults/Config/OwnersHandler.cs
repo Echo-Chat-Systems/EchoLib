@@ -1,10 +1,11 @@
 using System.Data;
 using System.Data.Common;
 using Core.Helpers.Snowflake;
+using Database.Handlers.Interface;
 
 namespace Database.Handlers.Defaults.Config;
 
-public class OwnersHandler : BaseHandler
+public class OwnersHandler : BaseHandler, IOwnersHandler
 {
 	public async Task Add(Guid ownerId)
 	{
