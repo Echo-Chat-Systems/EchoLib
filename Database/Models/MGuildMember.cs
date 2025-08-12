@@ -10,7 +10,7 @@ namespace Database.Models.Chat;
 public class MGuildMember : BaseModel
 {
 	// Default models
-	public static readonly MUser.MProfile DefaultCustomisationOverride = new() { };
+	public static readonly UserModel.MProfile DefaultCustomisationOverride = new() { };
 
 	/// <inheritdoc cref="BaseModel"/>
 	public MGuildMember(IDataRecord record) : base(record)
@@ -21,7 +21,7 @@ public class MGuildMember : BaseModel
 		Nickname = record.GetString(record.GetOrdinal("nickname"));
 		CustomisationOverrideRaw = record.GetString(record.GetOrdinal("customisation_override"));
 
-		CustomisationOverride = JsonSerializer.Deserialize<MUser.MProfile>(CustomisationOverrideRaw, StaticOptions.JsonSerialzer) ?? throw new InvalidDataException(nameof(CustomisationOverrideRaw));
+		CustomisationOverride = JsonSerializer.Deserialize<UserModel.MProfile>(CustomisationOverrideRaw, StaticOptions.JsonSerialzer) ?? throw new InvalidDataException(nameof(CustomisationOverrideRaw));
 	}
 
 	/// <inheritdoc />
@@ -29,7 +29,7 @@ public class MGuildMember : BaseModel
 	/// <param name="userId">User id</param>
 	/// <param name="nickname">User nickname override.</param>
 	/// <param name="customisationOverride">User profile override.</param>
-	public MGuildMember(Snowflake guildId, UserId userId, string? nickname = null, MUser.MProfile? customisationOverride = null)
+	public MGuildMember(Snowflake guildId, UserId userId, string? nickname = null, UserModel.MProfile? customisationOverride = null)
 	{
 		GuildId = guildId;
 		UserId = userId;
@@ -38,7 +38,7 @@ public class MGuildMember : BaseModel
 	}
 
 	// Internal fields for models
-	private MUser.MProfile _customisationOverride = null!;
+	private UserModel.MProfile _customisationOverride = null!;
 
 	/// <summary>
 	/// Guild id.
@@ -63,7 +63,7 @@ public class MGuildMember : BaseModel
 	/// <summary>
 	/// User profile customisation override.
 	/// </summary>
-	public MUser.MProfile CustomisationOverride
+	public UserModel.MProfile CustomisationOverride
 	{
 		get => _customisationOverride;
 		set

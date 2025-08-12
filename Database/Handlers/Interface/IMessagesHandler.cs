@@ -3,13 +3,14 @@ using Database.Models.NoSql;
 
 namespace Database.Handlers.Interface;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public record PagingToken(ulong LastSeen, Guid Channel);
 
 public interface IMessagesHandler
 {
-	public Task<Snowflake> Add(MMessage message);
-	public Task Update(MMessage message);
-	public Task Delete(MMessage message);
+	public Task<Snowflake> Add(DMessage message);
+	public Task Update(DMessage message);
+	public Task Delete(DMessage message);
 
-	public Task<IEnumerable<MMessage>> GetMany(Guid channelId, PagingToken? pagingToken = null, Func<IEnumerable<MMessage>, IEnumerable<MMessage>>? selector = null);
+	public Task<IEnumerable<DMessage>> GetMany(Guid channelId, PagingToken? pagingToken = null, Func<IEnumerable<DMessage>>? selector = null);
 }

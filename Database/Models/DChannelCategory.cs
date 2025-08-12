@@ -5,14 +5,14 @@ using Core.Helpers.Snowflake;
 
 namespace Database.Models.Chat;
 
-public class MChannelCategory : BaseModel
+public class DChannelCategory : BaseModel
 {
 	// Default models
 	public static readonly MCustomisation DefaultCustomisation = new() { };
 	public static readonly MConfig DefaultConfig = new MConfig() { };
 
 	/// <inheritdoc />
-	public MChannelCategory(IDataRecord record) : base(record)
+	public DChannelCategory(IDataRecord record) : base(record)
 	{
 		GuildId = new Snowflake(record.GetInt64(record.GetOrdinal("guild_id")));
 		Name = record.GetString(record.GetOrdinal("name"));
@@ -29,7 +29,7 @@ public class MChannelCategory : BaseModel
 	/// <param name="type">Channel category type.</param>
 	/// <param name="customisation">Channel category customisation.</param>
 	/// <param name="config">Channel category configuration.</param>
-	public MChannelCategory(string name, CategoryType type, MCustomisation? customisation, MConfig? config)
+	public DChannelCategory(string name, CategoryType type, MCustomisation? customisation, MConfig? config)
 	{
 		GuildId = StaticOptions.SnowflakeGenerator.New();
 		Name = name;

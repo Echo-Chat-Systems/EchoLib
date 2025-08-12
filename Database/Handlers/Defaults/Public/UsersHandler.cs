@@ -1,12 +1,13 @@
 using System.Data;
 using System.Data.Common;
+using Database.Models;
 using Database.Models.Public;
 
 namespace Database.Handlers.Defaults.Public;
 
 public abstract class UsersHandler : BaseHandler
 {
-    public async Task<MUser> Create(string sk, string ek, string username, int tag, MUser.MProfile profile)
+    public async Task<UserModel> Create(string sk, string ek, string username, int tag, UserModel.MProfile profile)
     {
         // Create command
         await using DbCommand command = await Command(true);
@@ -23,10 +24,10 @@ public abstract class UsersHandler : BaseHandler
         });
 
         // Execute command
-        return await RunModify(command, reader => new MUser(reader));
+        return await RunModify(command, reader => new UserModel(reader));
     }
 
-    public async Task<MUser?> Get(string sk)
+    public async Task<UserModel?> Get(string sk)
     {
         // Create command
         await using DbCommand command = await Command(false);
@@ -39,10 +40,10 @@ public abstract class UsersHandler : BaseHandler
         });
 
         // Execute command
-        return await RunGet(command, reader => new MUser(reader));
+        return await RunGet(command, reader => new UserModel(reader));
     }
 
-    public async Task<MUser> Update(MUser user)
+    public async Task<UserModel> Update(UserModel user)
     {
         // Create command
         await using DbCommand command = await Command(true);
@@ -59,7 +60,7 @@ public abstract class UsersHandler : BaseHandler
         });
 
         // Execute command
-        return await RunModify(command, reader => new MUser(reader));
+        return await RunModify(command, reader => new UserModel(reader));
     }
 
     public async Task Delete(string sk)

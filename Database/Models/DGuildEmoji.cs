@@ -4,7 +4,7 @@ using Core.Helpers.Snowflake;
 
 namespace Database.Models.Media;
 
-public class MGuildEmoji(IDataRecord record) : BaseModel(record)
+public class DGuildEmoji(IDataRecord record) : BaseModel(record)
 {
 	public Snowflake GuildId { get; } = new(record.GetInt64(record.GetOrdinal("guild_id")));
 	public UserId CreatedBy { get; } = new(record.GetString(record.GetOrdinal("created_by")));

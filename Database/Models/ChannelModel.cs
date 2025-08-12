@@ -4,10 +4,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Core.Helpers;
 using Core.Helpers.Snowflake;
+using Core.Models;
 
 namespace Database.Models;
 
-public class MChannel : BaseModel
+public class ChannelModel : BaseEntityModel
 {
 	// Default models
 	public static readonly MCustomisation DefaultCustomisation = new() { };
@@ -18,24 +19,11 @@ public class MChannel : BaseModel
 	};
 
 	/// <inheritdoc/>
-	public MChannel(IDataRecord record) : base(record)
-	{
-		// Assign parameters
-		GuildId = new Snowflake(record.GetInt64(record.GetOrdinal("guild_id")));
-		Name = record.GetString(record.GetOrdinal("name"));
-		Type = (ChannelType)record.GetInt16(record.GetOrdinal("type"));
-		CustomisationRaw = record.GetString(record.GetOrdinal("customisation"));
-		ConfigRaw = record.GetString(record.GetOrdinal("config"));
-
-		DeserialiseModels();
-	}
-
-	/// <inheritdoc/>
 	/// <param name="name">Channel name.</param>
 	/// <param name="type">Channel type.</param>
 	/// <param name="customisation">Customisation.</param>
 	/// <param name="config">Configuration.</param>
-	public MChannel(string name, ChannelType type, MCustomisation? customisation, MConfig? config)
+	public ChannelModel(string name, ChannelType type, MCustomisation? customisation, MConfig? config)
 	{
 		GuildId = StaticOptions.SnowflakeGenerator.New();
 		Name = name;

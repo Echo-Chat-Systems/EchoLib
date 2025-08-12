@@ -2,13 +2,12 @@ using System.Data;
 using System.Data.Common;
 using Database.Handlers.Interface;
 using Database.Models;
-using Database.Models.Chat;
 
 namespace Database.Handlers.Defaults.Chat;
 
 public class ChannelsHandler : BaseHandler, IChannelsHandler
 {
-	public async Task<MChannel> Create(Guid guildId, string name, short? type = null, string? customisation = null, string? config = null)
+	public async Task<ChannelModel> Create(Guid guildId, string name, short? type = null, string? customisation = null, string? config = null)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -25,10 +24,10 @@ public class ChannelsHandler : BaseHandler, IChannelsHandler
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new MChannel(reader));
+		return await RunModify(command, reader => new ChannelModel(reader));
 	}
 
-	public async Task<MChannel?> Get(Guid id)
+	public async Task<ChannelModel?> Get(Guid id)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -41,10 +40,10 @@ public class ChannelsHandler : BaseHandler, IChannelsHandler
 		});
 
 		// Execute command
-		return await RunGet(command, reader => new MChannel(reader));
+		return await RunGet(command, reader => new ChannelModel(reader));
 	}
 
-	public async Task<MChannel> Update(MChannel mChannel)
+	public async Task<ChannelModel> Update(ChannelModel channel)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -54,16 +53,16 @@ public class ChannelsHandler : BaseHandler, IChannelsHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@id", new Parameter { Type = DbType.Guid, Value = mChannel.Id } },
-			{ "@guild_id", new Parameter { Type = DbType.Guid, Value = mChannel.GuildId } },
-			{ "@name", new Parameter { Type = DbType.String, Value = mChannel.Name } },
-			{ "@type", new Parameter { Type = DbType.Int16, Value = mChannel.Type, Nullable = true } },
-			{ "@customisation", new Parameter { Type = DbType.String, Value = mChannel.CustomisationRaw, Nullable = true } },
-			{ "@config", new Parameter { Type = DbType.String, Value = mChannel.ConfigRaw, Nullable = true } }
+			{ "@id", new Parameter { Type = DbType.Guid, Value = channel.Id } },
+			{ "@guild_id", new Parameter { Type = DbType.Guid, Value = channel.GuildId } },
+			{ "@name", new Parameter { Type = DbType.String, Value = channel.Name } },
+			{ "@type", new Parameter { Type = DbType.Int16, Value = channel.Type, Nullable = true } },
+			{ "@customisation", new Parameter { Type = DbType.String, Value = channel.CustomisationRaw, Nullable = true } },
+			{ "@config", new Parameter { Type = DbType.String, Value = channel.ConfigRaw, Nullable = true } }
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new MChannel(reader));
+		return await RunModify(command, reader => new ChannelModel(reader));
 	}
 
 	public async Task Delete(Guid id)

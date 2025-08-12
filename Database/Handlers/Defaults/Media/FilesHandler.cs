@@ -7,7 +7,7 @@ namespace Database.Handlers.Defaults.Media;
 
 public class FilesHandler : BaseHandler, IFilesHandler
 {
-	public async Task<MFile> Create(string owner)
+	public async Task<DFile> Create(string owner)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -20,10 +20,10 @@ public class FilesHandler : BaseHandler, IFilesHandler
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new MFile(reader));
+		return await RunModify(command, reader => new DFile(reader));
 	}
 
-	public async Task<MFile?> Get(Guid id)
+	public async Task<DFile?> Get(Guid id)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -36,10 +36,10 @@ public class FilesHandler : BaseHandler, IFilesHandler
 		});
 
 		// Execute command
-		return await RunGet(command, reader => new MFile(reader));
+		return await RunGet(command, reader => new DFile(reader));
 	}
 
-	public async Task<MFile> Update(MFile file)
+	public async Task<DFile> Update(DFile file)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -53,7 +53,7 @@ public class FilesHandler : BaseHandler, IFilesHandler
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new MFile(reader));
+		return await RunModify(command, reader => new DFile(reader));
 	}
 
 	public async Task Delete(Guid id)

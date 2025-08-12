@@ -5,7 +5,7 @@ using Core.Helpers.Snowflake;
 
 namespace Database.Models.NoSql;
 
-public class MMessage()
+public class DMessage()
 {
 	[Required]
 	[JsonPropertyName("id")]
