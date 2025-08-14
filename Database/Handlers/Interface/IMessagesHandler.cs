@@ -1,5 +1,5 @@
-﻿using Core.Helpers.Snowflake;
-using Database.Models.NoSql;
+﻿using Database.Models.NoSql;
+using Models;
 
 namespace Database.Handlers.Interface;
 

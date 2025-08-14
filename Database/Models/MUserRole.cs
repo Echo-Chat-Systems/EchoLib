@@ -1,7 +1,7 @@
 using System.Data;
-using Core.Auth.Signing;
+using Models.Crypto.Signing;
 
-namespace Database.Models.Public;
+namespace Database.Models;
 
 public class MUserRole(IDataRecord record) : BaseModel(record)
 {

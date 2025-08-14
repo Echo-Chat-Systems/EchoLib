@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 using System.Text.Json;
-using Core.Auth;
+using Models.Crypto;
 
 namespace Core.Helpers;
 

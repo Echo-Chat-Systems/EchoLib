@@ -1,8 +1,8 @@
 using System.Data;
 using System.Data.Common;
-using Core.Auth.Signing;
 using Database.Handlers.Interface;
 using Database.Models.Chat;
+using Models.Crypto.Signing;
 
 namespace Database.Handlers.Defaults.Chat;
 

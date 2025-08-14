@@ -2,9 +2,9 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using Core.Comms;
-using Core.Models.Other;
 using Core.Processes.Actions.Error;
 using Core.Processes.Params.Error;
+using Models.Comms.Other;
 
 namespace Core.Helpers;
 

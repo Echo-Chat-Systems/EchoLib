@@ -1,7 +1,7 @@
 using System.Data;
 using System.Data.Common;
-using Core.Helpers.Snowflake;
 using Database.Handlers.Interface;
+using Models;
 
 namespace Database.Handlers.Defaults.Config;
 

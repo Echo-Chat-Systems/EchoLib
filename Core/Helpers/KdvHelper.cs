@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
-using Core.Auth;
-using Core.Auth.Encryption;
-using Core.Auth.Signing;
+using Models.Crypto;
+using Models.Crypto.Encryption;
+using Models.Crypto.Signing;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Crypto.Parameters;

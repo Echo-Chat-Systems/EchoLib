@@ -1,9 +1,9 @@
 using System.Data;
 using System.Text.Json;
-using Core.Auth.Signing;
 using Core.Helpers;
-using Core.Helpers.Snowflake;
 using Database.Models.Public;
+using Models;
+using Models.Crypto.Signing;
 
 namespace Database.Models.Chat;
 

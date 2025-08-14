@@ -1,5 +1,5 @@
-using Core.Auth.Signing;
 using Database.Models.Chat;
+using Models.Crypto.Signing;
 
 namespace Database.Handlers.Interface;
 

@@ -1,5 +1,5 @@
 using System.Data;
-using Core.Auth.Signing;
+using Models.Crypto.Signing;
 
 namespace Database.Models.Media;
 
