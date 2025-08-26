@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Models.Generic;
 
 namespace Models.Guild;
 
-public class InviteModel : BaseEntityModel
+public class InviteModel : BaseDbm
 {
 	[Required] public required string Code { get; init; }
 	[Required] public required Snowflake GuildId { get; init; }

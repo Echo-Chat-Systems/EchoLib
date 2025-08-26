@@ -1,6 +1,8 @@
-﻿namespace Models;
+﻿using Models.Generic;
 
-public class BaseEntityModel
+namespace Models;
+
+public class BaseDbm
 {
 	/// <summary>
 	/// Item database id.
@@ -10,13 +12,13 @@ public class BaseEntityModel
 	/// <summary>
 	/// Initialise a new model.
 	/// </summary>
-	protected BaseEntityModel() => Id = Snowflake.New();
+	protected BaseDbm() => Id = Snowflake.New();
 
 	/// <summary>
 	/// Initialise a new model with a known id.
 	/// </summary>
 	/// <param name="id">Object id.</param>
-	protected BaseEntityModel(Snowflake id)
+	protected BaseDbm(Snowflake id)
 	{
 		Id = id;
 	}

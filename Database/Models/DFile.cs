@@ -1,7 +1,7 @@
 using System.Data;
 using Models.Crypto.Signing;
 
-namespace Database.Models.Media;
+namespace Database.Models;
 
 public class DFile : BaseModel
 {

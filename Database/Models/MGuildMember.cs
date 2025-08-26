@@ -1,11 +1,10 @@
 using System.Data;
 using System.Text.Json;
 using Core.Helpers;
-using Database.Models.Public;
-using Models;
 using Models.Crypto.Signing;
+using Models.Generic;
 
-namespace Database.Models.Chat;
+namespace Database.Models;
 
 public class MGuildMember : BaseModel
 {

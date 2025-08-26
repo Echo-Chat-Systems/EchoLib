@@ -1,6 +1,6 @@
 ﻿namespace Models.Channel;
 
-public class CustomisationModel
+public class ChannelMemberDto
 {
 	
 }

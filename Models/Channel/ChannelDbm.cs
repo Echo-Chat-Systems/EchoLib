@@ -1,34 +1,34 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using Models.Generic;
 
 namespace Models.Channel;
 
-public class ChannelModel : BaseEntityModel
+public class ChannelDbm : BaseDbm
 {
 	// Default models
-	public static readonly CustomisationModel DefaultCustomisation = new() { };
+	public static readonly ChannelCustomisationJm DefaultCustomisation = new() { };
 
-	public static readonly ConfigModel DefaultConfig = new()
+	public static readonly ChannelConfigJm DefaultChannelConfig = new()
 	{
 		IsEncrypted = false
 	};
 
 	/// <inheritdoc/>
-	public ChannelModel(Snowflake guildId, string name, ConfigModel? config = null, CustomisationModel? customisation = null)
+	public ChannelDbm(Snowflake guildId, string name, ChannelConfigJm? config = null, ChannelCustomisationJm? customisation = null)
 	{
 		GuildId = guildId;
 		Name = name;
-		Config = config ?? DefaultConfig;
+		ChannelConfig = config ?? DefaultChannelConfig;
 		Customisation = customisation ?? DefaultCustomisation;
 	}
 
 	/// <inheritdoc/>
-	public ChannelModel(Snowflake id, Snowflake guildId, string name, ConfigModel? config = null, CustomisationModel? customisation = null) : base(id)
+	public ChannelDbm(Snowflake id, Snowflake guildId, string name, ChannelConfigJm? config = null, ChannelCustomisationJm? customisation = null) : base(id)
 	{
 		GuildId = guildId;
 		Name = name;
-		Config = config ?? DefaultConfig;
+		ChannelConfig = config ?? DefaultChannelConfig;
 		Customisation = customisation ?? DefaultCustomisation;
 	}
 
@@ -50,11 +50,11 @@ public class ChannelModel : BaseEntityModel
 	/// <summary>
 	/// Channel customisation.
 	/// </summary>
-	public CustomisationModel? Customisation { get; set; }
+	public ChannelCustomisationJm? Customisation { get; set; }
 
 	/// <summary>
 	/// Channel configuration.
 	/// </summary>
 	[Required]
-	public ConfigModel Config { get; set; }
+	public ChannelConfigJm ChannelConfig { get; set; }
 }

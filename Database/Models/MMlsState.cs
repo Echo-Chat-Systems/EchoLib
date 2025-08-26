@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace Database.Models.Secure;
+namespace Database.Models;
 
 public class MMlsState(IDataRecord record) : BaseModel(record)
 {

@@ -1,8 +1,8 @@
 using System.Data;
-using Models;
 using Models.Crypto.Signing;
+using Models.Generic;
 
-namespace Database.Models.Media;
+namespace Database.Models;
 
 public class DGuildEmoji(IDataRecord record) : BaseModel(record)
 {

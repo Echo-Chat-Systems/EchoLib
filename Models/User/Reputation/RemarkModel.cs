@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Models.Crypto.Signing;
+using Models.Generic;
 
 namespace Models.User.Reputation;
 

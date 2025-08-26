@@ -1,6 +1,6 @@
 using System.Data;
 using System.Data.Common;
-using Database.Models.Public;
+using Database.Models;
 
 namespace Database.Handlers.Defaults.Public;
 

@@ -2,7 +2,7 @@
 
 namespace Models.Guild;
 
-public class GuildModel : BaseEntityModel
+public class GuildModel : BaseDbm
 {
 	public required string Name { get; set; }
 	public required UserId Owner { get; set; }

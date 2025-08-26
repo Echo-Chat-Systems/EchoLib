@@ -1,7 +1,7 @@
 using System.Data;
 using System.Data.Common;
 using Database.Handlers.Interface;
-using Database.Models.Media;
+using Database.Models;
 
 namespace Database.Handlers.Defaults.Media;
 

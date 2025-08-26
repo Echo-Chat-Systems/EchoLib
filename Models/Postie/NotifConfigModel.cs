@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Models.Generic;
 
 namespace Models.Postie;
 

@@ -1,5 +1,6 @@
-﻿using Database.Models.NoSql;
+﻿using Database.Models;
 using Models;
+using Models.Generic;
 
 namespace Database.Handlers.Interface;
 

@@ -1,7 +1,7 @@
 using System.Data;
-using Models;
+using Models.Generic;
 
-namespace Database.Models.Media;
+namespace Database.Models;
 
 public class DMessageAttachment(IDataRecord record) : BaseModel(record)
 {

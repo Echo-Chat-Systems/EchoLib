@@ -1,7 +1,7 @@
 using System.Data;
 using Models.Crypto.Signing;
 
-namespace Database.Models.Secure;
+namespace Database.Models;
 
 public class MChannelCommit(IDataRecord record) : BaseModel(record)
 {

@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Models.Comms.Other;
+using Models.Generic;
 
 namespace Models.Crypto;
 
@@ -15,5 +16,5 @@ public class UserFile
 	public required KeySet Keys { get; set; } 
 	
 	[JsonPropertyName("server")]
-	public required ServerInfo Server { get; set; }
+	public required ServerInfoJm Server { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Models.Postie;
 
 namespace Models.Channel;
@@ -7,7 +6,7 @@ namespace Models.Channel;
 /// <summary>
 /// Channel configuration model.
 /// </summary>
-public class ConfigModel
+public class ChannelConfigJm
 {
 	[JsonPropertyName("modes")] public IEnumerable<string>? AllowedModes { get; set; }
 	[JsonPropertyName("encrypted")] public bool? IsEncrypted { get; set; }

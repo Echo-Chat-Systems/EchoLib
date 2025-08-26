@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Models.Generic;
 
 namespace Models.Media;
 
-public class RichMediaModel : BaseEntityModel
+public class RichMediaModel : BaseDbm
 {
 	[Required] public required EmojiFrom From { get; set; }
 	[Required] public required string Name { get; set; }

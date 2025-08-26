@@ -1,5 +1,5 @@
-﻿using Models.Comms;
-using Models.Crypto;
+﻿using Models.Crypto;
+using Models.Generic;
 using Models.User.Reputation;
 
 namespace Models.User;

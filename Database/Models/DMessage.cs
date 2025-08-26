@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Models;
 using Models.Crypto.Signing;
+using Models.Generic;
 
-namespace Database.Models.NoSql;
+namespace Database.Models;
 
 public class DMessage()
 {

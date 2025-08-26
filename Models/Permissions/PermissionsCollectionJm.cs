@@ -1,6 +1,6 @@
 ﻿namespace Models.Permissions;
 
-public class PermissionsCollectionModel
+public class PermissionsCollectionJm
 {
 	public GuildPermissions? Guild { get; set; }
 	public TextPermissions? Channel { get; set; }

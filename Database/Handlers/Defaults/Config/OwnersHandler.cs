@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.Common;
 using Database.Handlers.Interface;
 using Models;
+using Models.Generic;
 
 namespace Database.Handlers.Defaults.Config;
 

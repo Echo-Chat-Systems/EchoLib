@@ -1,10 +1,11 @@
 using System.Data;
 using Models;
 using Models.Crypto.Signing;
+using Models.Generic;
 
-namespace Database.Models.Public;
+namespace Database.Models;
 
-public class MInvite(IDataRecord record) : BaseModel(record)
+public class MInvite(IDataRecord record) : BaseDbm(record)
 {
 	public Snowflake GuildId { get; set; } = new(record.GetInt64(record.GetOrdinal("guild_id")));
 	public Snowflake ChannelId { get; set; } = new(record.GetInt64(record.GetOrdinal("channel_id")));

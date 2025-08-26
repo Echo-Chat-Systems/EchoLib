@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Models.Crypto.Signing;
+using Models.Generic;
 using Models.User;
 
 namespace Models.Guild;
 
-public class MemberModel : BaseEntityModel
+public class MemberModel : BaseDbm
 {
 	[Required] [JsonPropertyName("user-id")] public required UserId UserId { get; set; }
 	[Required] [JsonPropertyName("roles")] public required IEnumerable<Snowflake> Roles { get; set; }

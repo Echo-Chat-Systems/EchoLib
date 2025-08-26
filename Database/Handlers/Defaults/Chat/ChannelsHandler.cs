@@ -8,7 +8,7 @@ namespace Database.Handlers.Defaults.Chat;
 
 public class ChannelsHandler : BaseHandler, IChannelsHandler
 {
-	public async Task<ChannelModel> Create(Guid guildId, string name, short? type = null, string? customisation = null, string? config = null)
+	public async Task<ChannelDbm> Create(Guid guildId, string name, short? type = null, string? customisation = null, string? config = null)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -25,10 +25,10 @@ public class ChannelsHandler : BaseHandler, IChannelsHandler
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new ChannelModel(reader));
+		return await RunModify(command, reader => new ChannelDbm(reader));
 	}
 
-	public async Task<ChannelModel?> Get(Guid id)
+	public async Task<ChannelDbm?> Get(Guid id)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -41,10 +41,10 @@ public class ChannelsHandler : BaseHandler, IChannelsHandler
 		});
 
 		// Execute command
-		return await RunGet(command, reader => new ChannelModel(reader));
+		return await RunGet(command, reader => new ChannelDbm(reader));
 	}
 
-	public async Task<ChannelModel> Update(ChannelModel channel)
+	public async Task<ChannelDbm> Update(ChannelDbm channel)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -63,7 +63,7 @@ public class ChannelsHandler : BaseHandler, IChannelsHandler
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new ChannelModel(reader));
+		return await RunModify(command, reader => new ChannelDbm(reader));
 	}
 
 	public async Task Delete(Guid id)

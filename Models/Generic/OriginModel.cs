@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Models;
+namespace Models.Generic;
 
 public class OriginModel
 {

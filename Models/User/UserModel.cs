@@ -3,7 +3,7 @@ using Models.Crypto.Signing;
 
 namespace Models.User;
 
-public class UserModel : BaseEntityModel
+public class UserModel : BaseDbm
 {
 	/// <summary>
 	/// User's public signing key.

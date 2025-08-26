@@ -1,4 +1,4 @@
-using Database.Models.Chat;
+using Database.Models;
 using Models.Crypto.Signing;
 
 namespace Database.Handlers.Interface;
