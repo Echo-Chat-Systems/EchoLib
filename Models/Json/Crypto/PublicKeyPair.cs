@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Models.Crypto.Encryption;
 using Models.Crypto.Signing;
 
-namespace Models.Crypto;
+namespace Models.Json.Crypto;
 
 public class PublicKeyPair
 {

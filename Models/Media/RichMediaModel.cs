@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Models.DatabaseModels;
 using Models.Generic;
 
 namespace Models.Media;
 
 public class RichMediaModel : BaseDbm
 {
-	[Required] public required EmojiFrom From { get; set; }
-	[Required] public required string Name { get; set; }
-	[Required] public required string Ref { get; set; }
+	public required EmojiFrom From { get; set; }
+	public required string Name { get; set; }
+	public required string Ref { get; set; }
 
 	/// <summary>
 	/// Source guild ID if the media is from a guild.
@@ -17,12 +18,12 @@ public class RichMediaModel : BaseDbm
 	/// <summary>
 	/// Media size in pixels.
 	/// </summary>
-	[Required] public required SizeModel Size { get; set; }
+	public required SizeModel Size { get; set; }
 
 	/// <summary>
 	/// Media type, either sticker or emoji.
 	/// </summary>
-	[Required] public required MediaType Type { get; set; }
+	public required MediaType Type { get; set; }
 
 	public enum EmojiFrom
 	{
@@ -32,8 +33,8 @@ public class RichMediaModel : BaseDbm
 
 	public class SizeModel
 	{
-		[Required] public required int X { get; set; }
-		[Required] public required int Y { get; set; }
+		public required int X { get; set; }
+		public required int Y { get; set; }
 	}
 
 	public enum MediaType

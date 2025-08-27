@@ -1,6 +1,6 @@
 ﻿using Models.Generic;
 
-namespace Models.Channel;
+namespace Models.Json;
 
 public class ChannelCustomisationJm
 {

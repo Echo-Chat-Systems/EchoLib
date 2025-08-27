@@ -3,6 +3,8 @@ using System.Data.Common;
 using Database.Handlers.Interface;
 using Database.Models;
 using Models.Channel;
+using Models.Database.Channel;
+using Models.DatabaseModels.Channel;
 
 namespace Database.Handlers.Defaults.Chat;
 

@@ -1,8 +1,9 @@
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+using Models.Channel;
+using Models.DatabaseModels;
 using Models.Generic;
+using Models.Json;
 
-namespace Models.Channel;
+namespace Models.Database.Channel;
 
 public class ChannelDbm : BaseDbm
 {
@@ -36,14 +37,11 @@ public class ChannelDbm : BaseDbm
 	/// <summary>
 	/// Parent guild.
 	/// </summary>
-	[JsonIgnore]
-	[Required]
 	public required Snowflake GuildId { get; init; }
 
 	/// <summary>
 	/// Channel name.
 	/// </summary>
-	[Required]
 	public required string Name { get; set; }
 
 
@@ -55,6 +53,5 @@ public class ChannelDbm : BaseDbm
 	/// <summary>
 	/// Channel configuration.
 	/// </summary>
-	[Required]
 	public ChannelConfigJm ChannelConfig { get; set; }
 }

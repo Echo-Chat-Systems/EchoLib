@@ -1,6 +1,6 @@
-﻿namespace Models.Comms;
+﻿namespace Models.JsonModels;
 
-public class OriginModel
+public class OriginJm
 {
 	public required string Host { get; init; }
 	public required int Port { get; init; }

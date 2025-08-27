@@ -1,4 +1,5 @@
 ﻿using Models.Crypto.Signing;
+using Models.DatabaseModels;
 
 namespace Models.Guild;
 

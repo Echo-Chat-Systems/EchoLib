@@ -1,4 +1,7 @@
-﻿namespace Models.Channel;
+﻿using Models.Channel;
+using Models.Json;
+
+namespace Models.DataTransfer.Channel;
 
 public class ChannelDto
 {

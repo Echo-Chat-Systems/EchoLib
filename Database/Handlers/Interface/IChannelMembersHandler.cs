@@ -1,6 +1,7 @@
 using Models;
 using Models.Channel;
 using Models.Crypto.Signing;
+using Models.DatabaseModels.Channel;
 using Models.Generic;
 
 namespace Database.Handlers.Interface;

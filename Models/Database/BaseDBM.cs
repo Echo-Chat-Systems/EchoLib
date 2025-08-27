@@ -1,6 +1,6 @@
 ﻿using Models.Generic;
 
-namespace Models;
+namespace Models.DatabaseModels;
 
 public class BaseDbm
 {

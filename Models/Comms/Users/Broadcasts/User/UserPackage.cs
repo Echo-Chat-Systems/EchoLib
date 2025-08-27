@@ -1,4 +1,5 @@
 using Models.Crypto;
+using Models.Json.Crypto;
 using Models.User;
 
 namespace Models.Comms.Users.Broadcasts.User;

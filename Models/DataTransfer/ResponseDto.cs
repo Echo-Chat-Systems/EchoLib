@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json.Serialization;
 
-namespace Models.Comms;
+namespace Models.DataTransfer;
 
-public class Response
+public class ResponseDto
 {
 	[JsonPropertyName("code")]
 	[Required]

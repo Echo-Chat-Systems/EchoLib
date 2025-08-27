@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using Models.Crypto;
 using Models.Crypto.Encryption;
 using Models.Crypto.Signing;
+using Models.Json.Crypto;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Crypto.Parameters;
@@ -15,7 +16,7 @@ namespace Core.Helpers;
 /// </summary>
 public static class KdvHelper
 {
-	public static KeySet Generate()
+	public static KeySetJm Generate()
 	{
 		// Generate encryption keys
 		using RSA encryption = RSA.Create(2048);
@@ -30,7 +31,7 @@ public static class KdvHelper
 		byte[] pubSk = ((Ed25519PublicKeyParameters)keyPair.Public).GetEncoded();
 		byte[] prvSk = ((Ed25519PrivateKeyParameters)keyPair.Private).GetEncoded();
 
-		return new KeySet
+		return new KeySetJm
 		{
 			PubSk = new PublicSigningKey(pubSk),
 			PrvSk = new PrivateSigningKey(prvSk),

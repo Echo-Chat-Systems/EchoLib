@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
-using Models.Comms.Other;
+using Models.Crypto;
 using Models.Generic;
 
-namespace Models.Crypto;
+namespace Models.Json.Crypto;
 
 
 /// <summary>
@@ -10,10 +10,10 @@ namespace Models.Crypto;
 ///
 /// All user files are encrypted with AES 256 using a user-provided password.
 /// </summary>
-public class UserFile
+public class UserFileJm
 {
 	[JsonPropertyName("keys")]
-	public required KeySet Keys { get; set; } 
+	public required KeySetJm Keys { get; set; } 
 	
 	[JsonPropertyName("server")]
 	public required ServerInfoJm Server { get; set; }

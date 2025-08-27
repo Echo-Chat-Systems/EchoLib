@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text.Json;
 using Models.Crypto;
+using Models.Json.Crypto;
 
 namespace Core.Helpers;
 
@@ -21,7 +22,7 @@ public static class UserFileHelper
 	/// <param name="data"></param>
 	/// <param name="outputFile"></param>
 	/// <param name="passphrase"></param>
-	public static void Encrypt(UserFile data, FileInfo outputFile, string passphrase)
+	public static void Encrypt(UserFileJm data, FileInfo outputFile, string passphrase)
 	{
 		// Serialise data
 		byte[] plaintext = JsonSerializer.SerializeToUtf8Bytes(data);
@@ -53,7 +54,7 @@ public static class UserFileHelper
 	/// <param name="password"></param>
 	/// <param name="userFile"></param>
 	/// <returns></returns>
-	public static bool Decrypt(FileInfo file, string password, out UserFile? userFile)
+	public static bool Decrypt(FileInfo file, string password, out UserFileJm? userFile)
 	{
 		// Set userFile by default to null
 		userFile = null;
@@ -78,7 +79,7 @@ public static class UserFileHelper
 		catch (CryptographicException) { return false; }
 
 		// Deserialize plaintext into content
-		userFile = JsonSerializer.Deserialize<UserFile>(plaintext);
+		userFile = JsonSerializer.Deserialize<UserFileJm>(plaintext);
 		return true;
 	}
 
