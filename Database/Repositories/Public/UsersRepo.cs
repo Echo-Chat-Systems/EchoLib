@@ -1,0 +1,95 @@
+using System.Data;
+using System.Data.Common;
+
+namespace Database.Repositories.Public;
+
+public abstract class UsersRepo : BaseHandler
+{
+    public async Task<UserModel> Create(string sk, string ek, string username, int tag, UserModel.MProfile profile)
+    {
+        // Create command
+        await using DbCommand command = await Command(true);
+        command.CommandText = "INSERT INTO public.users (id, encryption_key, username, tag, profile) VALUES (@sk, @ek, @username, @tag, @profile) RETURNING *";
+
+        // Create parameters
+        AddParams(command, new Dictionary<string, Parameter>
+        {
+            { "@sk", new Parameter { Type = DbType.String, Value = sk } },
+            { "@ek", new Parameter { Type = DbType.String, Value = ek } },
+            { "@username", new Parameter { Type = DbType.String, Value = username } },
+            { "@tag", new Parameter { Type = DbType.Int32, Value = tag } },
+            { "@profile", new Parameter { Type = DbType.String, Value = profile.ToString() } }
+        });
+
+        // Execute command
+        return await RunModify(command, reader => new UserModel(reader));
+    }
+
+    public async Task<UserModel?> Get(string sk)
+    {
+        // Create command
+        await using DbCommand command = await Command(false);
+        command.CommandText = "SELECT * FROM public.users WHERE id = @sk";
+
+        // Create parameters
+        AddParams(command, new Dictionary<string, Parameter>
+        {
+            { "@sk", new Parameter { Type = DbType.String, Value = sk } }
+        });
+
+        // Execute command
+        return await RunGet(command, reader => new UserModel(reader));
+    }
+
+    public async Task<UserModel> Update(UserModel user)
+    {
+        // Create command
+        await using DbCommand command = await Command(true);
+        command.CommandText = "UPDATE public.users SET encryption_key = @ek, username = @username, tag = @tag, profile = @profile WHERE id = @sk";
+
+        // Create parameters
+        AddParams(command, new Dictionary<string, Parameter>
+        {
+            { "@sk", new Parameter { Type = DbType.String, Value = user.Id } },
+            { "@ek", new Parameter { Type = DbType.String, Value = user.EncryptionKey } },
+            { "@username", new Parameter { Type = DbType.String, Value = user.Username } },
+            { "@tag", new Parameter { Type = DbType.Int32, Value = user.Tag } },
+            { "@profile", new Parameter { Type = DbType.String, Value = user.ProfileRaw } }
+        });
+
+        // Execute command
+        return await RunModify(command, reader => new UserModel(reader));
+    }
+
+    public async Task Delete(string sk)
+    {
+        // Create command
+        await using DbCommand command = await Command(true);
+        command.CommandText = "DELETE FROM public.users WHERE id = @sk";
+
+        // Create parameters
+        AddParams(command, new Dictionary<string, Parameter>
+        {
+            { "@sk", new Parameter { Type = DbType.String, Value = sk } }
+        });
+
+        // Execute command
+        await RunDelete(command);
+    }
+
+    public async Task<bool> Exists(string sk)
+    {
+        // Create command
+        await using DbCommand command = await Command(false);
+        command.CommandText = "SELECT id FROM public.users WHERE id = @sk";
+
+        // Create parameters
+        AddParams(command, new Dictionary<string, Parameter>
+        {
+            { "@sk", new Parameter { Type = DbType.String, Value = sk } }
+        });
+
+        // Execute command
+        return await RunExists(command);
+    }
+}

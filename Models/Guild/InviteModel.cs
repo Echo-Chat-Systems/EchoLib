@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Models.DatabaseModels;
+using Models.Database;
 using Models.Generic;
 
 namespace Models.Guild;
