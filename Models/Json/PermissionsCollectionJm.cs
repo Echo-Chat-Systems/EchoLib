@@ -1,4 +1,6 @@
-﻿namespace Models.Permissions;
+﻿using Models.Permissions;
+
+namespace Models.Json;
 
 public class PermissionsCollectionJm
 {

@@ -2,12 +2,14 @@ using System.Data;
 using System.Data.Common;
 using Database.Handlers.Interface;
 using Models.Crypto.Signing;
+using Models.Database.Channel;
+using Models.Generic;
 
 namespace Database.Handlers.Defaults.Chat;
 
 public class ChannelMembersHandler : BaseHandler, IChannelMembersHandler
 {
-	public async Task<MChannelMember> Create(UserId userId, Guid channelId, long permissions)
+	public async Task<ChannelMemberDbm> Create(UserId userId, Snowflake channelId, long permissions)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -22,10 +24,10 @@ public class ChannelMembersHandler : BaseHandler, IChannelMembersHandler
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new MChannelMember(reader));
+		return await RunModify(command, reader => new ChannelMemberDbm(reader));
 	}
 
-	public async Task<MChannelMember?> Get(Guid id)
+	public async Task<ChannelMemberDbm?> Get(Guid id)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -38,7 +40,7 @@ public class ChannelMembersHandler : BaseHandler, IChannelMembersHandler
 		});
 
 		// Execute command
-		return await RunGet(command, reader => new MChannelMember(reader));
+		return await RunGet(command, reader => new ChannelMemberDbm(reader));
 	}
 
 	public async Task<MChannelMember?> Get(UserId userId, Guid channelId)
@@ -142,5 +144,40 @@ public class ChannelMembersHandler : BaseHandler, IChannelMembersHandler
 
 		// Execute command
 		return await RunExists(command);
+	}
+
+	public async Task<ChannelMemberDbm?> Get(Snowflake id)
+	{
+		throw new NotImplementedException();
+	}
+
+	public async Task<ChannelMemberDbm?> Get(UserId userId, Snowflake channelId)
+	{
+		throw new NotImplementedException();
+	}
+
+	public async Task<ChannelMemberDbm> Update(ChannelMemberDbm channelMember)
+	{
+		throw new NotImplementedException();
+	}
+
+	public async Task Delete(Snowflake id)
+	{
+		throw new NotImplementedException();
+	}
+
+	public async Task Delete(UserId userId, Snowflake channelId)
+	{
+		throw new NotImplementedException();
+	}
+
+	public async Task<bool> Exists(Snowflake id)
+	{
+		throw new NotImplementedException();
+	}
+
+	public async Task<bool> Exists(UserId userId, Snowflake channelId)
+	{
+		throw new NotImplementedException();
 	}
 }

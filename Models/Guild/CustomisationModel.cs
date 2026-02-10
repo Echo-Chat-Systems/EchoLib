@@ -1,5 +1,6 @@
-﻿using Models.Media;
+﻿using Models.Generic;
+using Models.Media;
 
 namespace Models.Guild;
 
-public class CustomisationModel : VisualCustomisationModel;
+public class CustomisationModel : VisualCustomisationJm;

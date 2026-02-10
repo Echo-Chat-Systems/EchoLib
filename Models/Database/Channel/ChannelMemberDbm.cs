@@ -1,9 +1,9 @@
-﻿using Models.Channel;
-using Models.Crypto.Signing;
+﻿using Models.Crypto.Signing;
+using Models.DatabaseModels;
 using Models.Generic;
 using Models.Json;
 
-namespace Models.DatabaseModels.Channel;
+namespace Models.Database.Channel;
 
 public class ChannelMemberDbm : BaseDbm
 {

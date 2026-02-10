@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Models.DatabaseModels;
+using Models.Json;
 using Models.Permissions;
 
 namespace Models.Guild;

@@ -1,6 +1,4 @@
-﻿using Models.Permissions;
-
-namespace Models.Channel;
+﻿namespace Models.Json.Channel;
 
 public class ChannelMemberConfigJm
 {

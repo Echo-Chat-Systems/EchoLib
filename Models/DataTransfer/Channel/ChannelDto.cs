@@ -3,13 +3,8 @@ using Models.Json;
 
 namespace Models.DataTransfer.Channel;
 
-public class ChannelDto
+public class ChannelDto : EntityModel
 {
-	/// <summary>
-	/// Channel ID.
-	/// </summary>
-	public required ulong Id { get; init; }
-
 	/// <summary>
 	/// Channel name.
 	/// </summary>

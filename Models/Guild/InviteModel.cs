@@ -19,5 +19,4 @@ public class InviteModel : BaseDbm
 	/// </summary>
 	public int? Uses { get; set; }
 
-	public
 }

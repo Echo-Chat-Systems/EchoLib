@@ -4,7 +4,6 @@ using Database.Handlers.Interface;
 using Database.Models;
 using Models.Channel;
 using Models.Database.Channel;
-using Models.DatabaseModels.Channel;
 
 namespace Database.Handlers.Defaults.Chat;
 
@@ -98,5 +97,10 @@ public class ChannelsHandler : BaseHandler, IChannelsHandler
 
 		// Execute command
 		return await RunExists(command);
+	}
+
+	public async Task<ChannelMemberDbm> AddMember(Guid channelId, Guid userId, string? role = null)
+	{
+		throw new NotImplementedException();
 	}
 }
