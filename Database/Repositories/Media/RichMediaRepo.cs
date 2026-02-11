@@ -1,6 +1,6 @@
 namespace Database.Repositories.Media;
 
-public class RichMediaRepo : BaseHandler, IRichMediaRepo
+public class RichMediaRepo : BaseRepo, IRichMediaRepo
 {
 
 }

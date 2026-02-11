@@ -4,7 +4,7 @@ using Models.Database.Channel;
 
 namespace Database.Repositories.Chat;
 
-public class ChannelsRepo : BaseHandler, IChannelsRepo
+public class ChannelsRepo : BaseRepo, IChannelsRepo
 {
 	public async Task<ChannelDbm> Create(Guid guildId, string name, short? type = null, string? customisation = null, string? config = null)
 	{
@@ -23,7 +23,7 @@ public class ChannelsRepo : BaseHandler, IChannelsRepo
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new ChannelDbm(reader));
+		return await RunModify<ChannelDbm>(command);
 	}
 
 	public async Task<ChannelDbm?> Get(Guid id)
@@ -39,7 +39,7 @@ public class ChannelsRepo : BaseHandler, IChannelsRepo
 		});
 
 		// Execute command
-		return await RunGet(command, reader => new ChannelDbm(reader));
+		return await RunGet<ChannelDbm>(command);
 	}
 
 	public async Task<ChannelDbm> Update(ChannelDbm channel)

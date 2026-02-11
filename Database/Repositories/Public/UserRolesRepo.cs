@@ -4,7 +4,7 @@ using Database.Models;
 
 namespace Database.Repositories.Public;
 
-public abstract class UserRolesRepo : BaseHandler
+public abstract class UserRolesRepo : BaseRepo
 {
 	public async Task<MUserRole> Create(string user, Guid role)
 	{

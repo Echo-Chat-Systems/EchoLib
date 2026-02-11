@@ -3,7 +3,7 @@ using System.Data.Common;
 
 namespace Database.Repositories.Chat;
 
-public class GuildsRepo : BaseHandler, IGuildsRepo
+public class GuildsRepo : BaseRepo, IGuildsRepo
 {
 	public async Task<MGuild> Create(string owner, string name, string? customisation = null)
 	{

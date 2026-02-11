@@ -4,7 +4,7 @@ using Models.Generic;
 
 namespace Database.Repositories.Config;
 
-public class OwnersRepo : BaseHandler, IOwnersHandler
+public class OwnersRepo : BaseRepo, IOwnersHandler
 {
 	public async Task Add(Guid ownerId)
 	{

@@ -1,13 +1,14 @@
 using System.Data;
 using System.Data.Common;
+using Dapper;
 
 namespace Database.Repositories;
 
-public class BaseHandler
+public class BaseRepo
 {
 	public required DbDataSource DataSource;
 
-	protected BaseHandler()
+	protected BaseRepo()
 	{
 	}
 
@@ -46,29 +47,14 @@ public class BaseHandler
 		}
 	}
 
-	protected async Task<T> RunModify<T>(DbCommand command, Func<DbDataReader, T> converter)
+	protected async Task<T> RunModify<T>(DbCommand command)
 	{
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-
-		if (reader.RecordsAffected != 1) goto Fail;
-		
-		if (await reader.ReadAsync())
-		{
-			await command.Transaction!.CommitAsync();
-			return converter(reader);
-		}
-		
-		Fail:
-			await command.Transaction!.RollbackAsync();
-			throw new InsertFailedException(command);
+		return command.Connection!.ExecuteScalar<T>(command.CommandText, command.Transaction) ?? throw new UpdateFailedException(command);
 	}
 
-	protected async Task<T?> RunGet<T>(DbCommand command, Func<DbDataReader, T> converter)
+	protected async Task<T?> RunGet<T>(DbCommand command)
 	{
-		await using DbDataReader reader = await command.ExecuteReaderAsync();
-		if (await reader.ReadAsync()) return converter(reader);
-
-		return default; // Return null if no category found
+		return command.Connection!.Query<T>(command.CommandText).FirstOrDefault();
 	}
 
 	protected async Task RunDelete(DbCommand command)

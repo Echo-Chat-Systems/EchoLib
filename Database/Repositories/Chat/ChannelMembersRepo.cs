@@ -6,7 +6,7 @@ using Models.Generic;
 
 namespace Database.Repositories.Chat;
 
-public class ChannelMembersRepo : BaseHandler, IChannelMembersRepo
+public class ChannelMembersRepo : BaseRepo, IChannelMembersRepo
 {
 	public async Task<ChannelMemberDbm> Create(UserId userId, Snowflake channelId, long permissions)
 	{
@@ -18,15 +18,15 @@ public class ChannelMembersRepo : BaseHandler, IChannelMembersRepo
 		AddParams(command, new Dictionary<string, Parameter>
 		{
 			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } },
-			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = channelId } },
-			{ "permissions", new Parameter { Type = DbType.Int64, Value = permissions } }
+			{ "@channel_id", new Parameter { Type = DbType.UInt64, Value = channelId } },
+			{ "permissions", new Parameter { Type = DbType.UInt64, Value = permissions } }
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new ChannelMemberDbm(reader));
+		return await RunModify<ChannelMemberDbm>(command);
 	}
 
-	public async Task<ChannelMemberDbm?> Get(Guid id)
+	public async Task<ChannelMemberDbm?> Get(Snowflake id)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -35,14 +35,14 @@ public class ChannelMembersRepo : BaseHandler, IChannelMembersRepo
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
+			{ "@id", new Parameter { Type = DbType.UInt64, Value = id } }
 		});
 
 		// Execute command
-		return await RunGet(command, reader => new ChannelMemberDbm(reader));
+		return await RunGet<ChannelMemberDbm>(command);
 	}
 
-	public async Task<ChannelMemberDbm?> Get(UserId userId, Guid channelId)
+	public async Task<ChannelMemberDbm?> Get(UserId userId, Snowflake channelId)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -53,11 +53,11 @@ public class ChannelMembersRepo : BaseHandler, IChannelMembersRepo
 		AddParams(command, new Dictionary<string, Parameter>
 		{
 			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } },
-			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = channelId } }
+			{ "@channel_id", new Parameter { Type = DbType.UInt64, Value = channelId } }
 		});
 
 		// Execute command
-		return await RunGet(command, reader => new ChannelMemberDbm(reader));
+		return await RunGet<ChannelMemberDbm>(command);
 	}
 
 	public async Task<ChannelMemberDbm> Update(ChannelMemberDbm channelMember)
@@ -74,10 +74,10 @@ public class ChannelMembersRepo : BaseHandler, IChannelMembersRepo
 		});
 
 		// Execute command
-		return await RunModify(command, reader => new ChannelMemberDbm(reader));
+		return await RunModify<ChannelMemberDbm>(command);
 	}
 
-	public async Task Delete(Guid id)
+	public async Task Delete(Snowflake id)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -86,14 +86,14 @@ public class ChannelMembersRepo : BaseHandler, IChannelMembersRepo
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@id", new Parameter { Type =  DbType.Guid, Value = id} }
+			{ "@id", new Parameter { Type =  DbType.UInt64, Value = id} }
 		});
 
 		// Execute command
 		await RunDelete(command);
 	}
 
-	public async Task Delete(UserId userId, Guid channelId)
+	public async Task Delete(UserId userId, Snowflake channelId)
 	{
 		// Create command
 		await using DbCommand command = await Command(true);
@@ -104,14 +104,14 @@ public class ChannelMembersRepo : BaseHandler, IChannelMembersRepo
 		AddParams(command, new Dictionary<string, Parameter>
 		{
 			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } },
-			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = channelId } }
+			{ "@channel_id", new Parameter { Type = DbType.UInt64, Value = channelId } }
 		});
 
 		// Execute command
 		await RunDelete(command);
 	}
 
-	public async Task<bool> Exists(Guid id)
+	public async Task<bool> Exists(Snowflake id)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -120,14 +120,14 @@ public class ChannelMembersRepo : BaseHandler, IChannelMembersRepo
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@id", new Parameter { Type =  DbType.Guid, Value = id} }
+			{ "@id", new Parameter { Type =  DbType.UInt64, Value = id} }
 		});
 
 		// Execute command
 		return await RunExists(command);
 	}
 
-	public async Task<bool> Exists(UserId userId, Guid channelId)
+	public async Task<bool> Exists(UserId userId, Snowflake channelId)
 	{
 		// Create command
 		await using DbCommand command = await Command(false);
@@ -138,41 +138,10 @@ public class ChannelMembersRepo : BaseHandler, IChannelMembersRepo
 		AddParams(command, new Dictionary<string, Parameter>
 		{
 			{ "@user_id", new Parameter { Type = DbType.String, Value = userId.ToString() } },
-			{ "@channel_id", new Parameter { Type = DbType.Guid, Value = channelId } }
+			{ "@channel_id", new Parameter { Type = DbType.UInt64, Value = channelId } }
 		});
 
 		// Execute command
 		return await RunExists(command);
-	}
-
-	public async Task<ChannelMemberDbm?> Get(Snowflake id)
-	{
-		throw new NotImplementedException();
-	}
-
-	public async Task<ChannelMemberDbm?> Get(UserId userId, Snowflake channelId)
-	{
-		throw new NotImplementedException();
-	}
-	
-
-	public async Task Delete(Snowflake id)
-	{
-		throw new NotImplementedException();
-	}
-
-	public async Task Delete(UserId userId, Snowflake channelId)
-	{
-		throw new NotImplementedException();
-	}
-
-	public async Task<bool> Exists(Snowflake id)
-	{
-		throw new NotImplementedException();
-	}
-
-	public async Task<bool> Exists(UserId userId, Snowflake channelId)
-	{
-		throw new NotImplementedException();
 	}
 }

@@ -3,7 +3,7 @@ using System.Data.Common;
 
 namespace Database.Repositories.Public;
 
-public abstract class RolesRepo : BaseHandler
+public abstract class RolesRepo : BaseRepo
 {
 	public async Task<MRole> Create(Guid guildId, string name, string customisation, long permissions)
 	{

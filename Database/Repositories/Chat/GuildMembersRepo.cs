@@ -5,7 +5,7 @@ using Models.Crypto.Signing;
 
 namespace Database.Repositories.Chat;
 
-public class GuildMembersRepo : BaseHandler, IGuildMembersRepo
+public class GuildMembersRepo : BaseRepo, IGuildMembersRepo
 {
 	public async Task<MGuildMember> Create(Guid guildId, UserId userId, string? nickname = null, string? customisation = null)
 	{

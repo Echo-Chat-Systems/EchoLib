@@ -4,7 +4,7 @@ using Database.Models;
 
 namespace Database.Repositories.Public;
 
-public class InvitesRepo : BaseHandler
+public class InvitesRepo : BaseRepo
 {
 	public async Task<MInvite> Create(Guid guildId, Guid channelId, string createdBy, int uses,
 		string? customisation = null, DateTime? expiry = null, string? targetUser = null)

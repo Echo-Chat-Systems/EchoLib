@@ -4,7 +4,7 @@ using Database.Models;
 
 namespace Database.Repositories.Media;
 
-public class FilesRepo : BaseHandler, IFilesRepo
+public class FilesRepo : BaseRepo, IFilesRepo
 {
 	public async Task<DFile> Create(string owner)
 	{

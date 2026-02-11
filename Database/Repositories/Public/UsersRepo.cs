@@ -3,7 +3,7 @@ using System.Data.Common;
 
 namespace Database.Repositories.Public;
 
-public abstract class UsersRepo : BaseHandler
+public abstract class UsersRepo : BaseRepo
 {
     public async Task<UserModel> Create(string sk, string ek, string username, int tag, UserModel.MProfile profile)
     {

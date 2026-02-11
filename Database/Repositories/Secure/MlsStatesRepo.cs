@@ -1,6 +1,6 @@
 ﻿namespace Database.Repositories.Secure;
 
-public class MlsStatesRepo : BaseHandler
+public class MlsStatesRepo : BaseRepo
 {
 	
 }

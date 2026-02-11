@@ -1,6 +1,6 @@
 namespace Database.Repositories.Config;
 
-public class DataRepo : BaseHandler, IDataRepo
+public class DataRepo : BaseRepo, IDataRepo
 {
 	public Task Create(string key, object value)
 	{
