@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Models.Crypto.Encryption;
 using Models.Crypto.Signing;
+using Models.Functional.Crypto.Signing;
 
 namespace Models.Json.Crypto;
 

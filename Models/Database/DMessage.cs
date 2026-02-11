@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Models.Crypto.Signing;
+using Models.Functional.Crypto.Signing;
 using Models.Generic;
 
 namespace Database.Models;

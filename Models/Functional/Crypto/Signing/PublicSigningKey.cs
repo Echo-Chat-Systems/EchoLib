@@ -1,6 +1,6 @@
 using Org.BouncyCastle.Crypto.Parameters;
 
-namespace Models.Crypto.Signing;
+namespace Models.Functional.Crypto.Signing;
 
 public class PublicSigningKey
 {

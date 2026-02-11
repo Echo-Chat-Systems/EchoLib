@@ -1,6 +1,7 @@
 ﻿using Models.Crypto.Encryption;
 using Models.Crypto.Signing;
 using Models.Database;
+using Models.Functional.Crypto.Signing;
 
 namespace Models.User;
 

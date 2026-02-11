@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using Models.Crypto;
 using Models.Crypto.Encryption;
 using Models.Crypto.Signing;
+using Models.Functional.Crypto.Signing;
 using Models.Json.Crypto;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;

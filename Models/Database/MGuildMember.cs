@@ -2,6 +2,7 @@ using System.Data;
 using System.Text.Json;
 using Core.Helpers;
 using Models.Crypto.Signing;
+using Models.Functional.Crypto.Signing;
 using Models.Generic;
 
 namespace Database.Models;

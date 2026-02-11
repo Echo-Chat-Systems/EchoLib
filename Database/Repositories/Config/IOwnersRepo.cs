@@ -1,4 +1,5 @@
 ﻿using Models.Crypto.Signing;
+using Models.Functional.Crypto.Signing;
 
 namespace Database.Repositories.Config;
 

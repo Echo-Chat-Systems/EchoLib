@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.Common;
 using Database.Models;
 using Models.Crypto.Signing;
+using Models.Functional.Crypto.Signing;
 
 namespace Database.Repositories.Chat;
 

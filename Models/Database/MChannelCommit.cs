@@ -1,5 +1,6 @@
 using System.Data;
 using Models.Crypto.Signing;
+using Models.Functional.Crypto.Signing;
 
 namespace Database.Models;
 
