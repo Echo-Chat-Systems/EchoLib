@@ -1,4 +1,5 @@
 using System.Data;
+using Models.Functional;
 using Models.Generic;
 
 namespace Database.Models;

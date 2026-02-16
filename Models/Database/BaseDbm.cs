@@ -1,4 +1,5 @@
-﻿using Models.Generic;
+﻿using Models.Functional;
+using Models.Generic;
 
 namespace Models.Database;
 

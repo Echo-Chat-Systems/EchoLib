@@ -1,5 +1,6 @@
 using System.Data;
 using System.Data.Common;
+using Models.Functional;
 using Models.Generic;
 
 namespace Database.Repositories.Config;

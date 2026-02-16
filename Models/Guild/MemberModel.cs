@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using Models.Crypto.Signing;
 using Models.Database;
+using Models.Functional;
 using Models.Functional.Crypto.Signing;
 using Models.Generic;
 using Models.User;

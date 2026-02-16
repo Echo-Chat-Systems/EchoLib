@@ -1,5 +1,6 @@
 using System.Data;
 using Models.Crypto.Signing;
+using Models.Functional;
 using Models.Functional.Crypto.Signing;
 using Models.Generic;
 

@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.Common;
 using Models.Crypto.Signing;
 using Models.Database.Channel;
+using Models.Functional;
 using Models.Functional.Crypto.Signing;
 using Models.Generic;
 

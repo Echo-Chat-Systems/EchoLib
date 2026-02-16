@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Models.Database;
+using Models.Functional;
 using Models.Generic;
 
 namespace Models.Media;

@@ -1,4 +1,5 @@
 using Models.Channel;
+using Models.Functional;
 using Models.Generic;
 using Models.Json;
 

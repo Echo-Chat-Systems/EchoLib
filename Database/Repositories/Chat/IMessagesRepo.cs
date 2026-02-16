@@ -1,4 +1,5 @@
 ﻿using Database.Models;
+using Models.Functional;
 using Models.Generic;
 
 namespace Database.Repositories.Chat;
