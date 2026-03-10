@@ -1,0 +1,14 @@
+<Project>
+    <PropertyGroup>
+        <VersionPrefix>1.0.0</VersionPrefix>
+        <VersionSuffix></VersionSuffix>
+
+        <Authors>Kyle Pannan</Authors>
+        <Company>EchoLib</Company>
+
+        <RepositoryUrl>https://github.com/yourrepo/EchoLib</RepositoryUrl>
+        <PackageProjectUrl>https://docs.echo-chat.au/</PackageProjectUrl>
+
+        <PackageIconUrl>https://static.echo-chat.au/res/appicon.png</PackageIconUrl>
+    </PropertyGroup>
+</Project>
