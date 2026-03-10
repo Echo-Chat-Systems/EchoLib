@@ -22,7 +22,7 @@ public class BaseHandler
 		DbCommand command = DataSource.CreateCommand();
 		if (includeTransaction) transaction = await command.Connection!.BeginTransactionAsync();
 		command.Transaction = transaction;
-		
+
 		return command;
 	}
 
@@ -35,8 +35,8 @@ public class BaseHandler
 
 	protected void AddParams(DbCommand command, Dictionary<string, Parameter> parameters)
 	{
-		DbParameter param;  // Reuse the same memory block
-		foreach (KeyValuePair<string,Parameter> parameter in parameters)
+		DbParameter param; // Reuse the same memory block
+		foreach (KeyValuePair<string, Parameter> parameter in parameters)
 		{
 			param = command.CreateParameter();
 			param.ParameterName = parameter.Key;
@@ -51,16 +51,16 @@ public class BaseHandler
 		await using DbDataReader reader = await command.ExecuteReaderAsync();
 
 		if (reader.RecordsAffected != 1) goto Fail;
-		
+
 		if (await reader.ReadAsync())
 		{
 			await command.Transaction!.CommitAsync();
 			return converter(reader);
 		}
-		
+
 		Fail:
-			await command.Transaction!.RollbackAsync();
-			throw new InsertFailedException(command);
+		await command.Transaction!.RollbackAsync();
+		throw new InsertFailedException(command);
 	}
 
 	protected async Task<T?> RunGet<T>(DbCommand command, Func<DbDataReader, T> converter)

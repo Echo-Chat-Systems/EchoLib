@@ -9,7 +9,6 @@ using Org.BouncyCastle.Security;
 
 namespace Core.Helpers;
 
-
 /// <summary>
 /// Key Derivation Helper.
 /// </summary>

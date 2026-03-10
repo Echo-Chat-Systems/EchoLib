@@ -24,7 +24,7 @@ public class PublicSigningKey
 	}
 }
 
-public class UserId: PublicSigningKey
+public class UserId : PublicSigningKey
 {
 	public UserId(string key) : base(key)
 	{

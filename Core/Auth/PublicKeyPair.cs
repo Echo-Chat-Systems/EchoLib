@@ -7,11 +7,7 @@ namespace Core.Auth;
 
 public class PublicKeyPair
 {
-	[JsonPropertyName("sk")]
-	[Required]
-	public PublicSigningKey? SigningKey { get; set; }
+	[JsonPropertyName("sk")] [Required] public PublicSigningKey? SigningKey { get; set; }
 
-	[JsonPropertyName("ek")]
-	[Required]
-	public PublicEncryptionKey? EncryptionKey { get; set; }
+	[JsonPropertyName("ek")] [Required] public PublicEncryptionKey? EncryptionKey { get; set; }
 }

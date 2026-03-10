@@ -76,12 +76,9 @@ public static class TextChannelPermissionsExtensions
 	{
 		TextChannelPermissions permissions = 0;
 		foreach (string scope in scopes)
-		{
 			if (OAuthMapping.TryGetValue(scope, out TextChannelPermissions permission))
-			{
 				permissions |= permission;
-			}
-		}
+
 		return permissions;
 	}
 

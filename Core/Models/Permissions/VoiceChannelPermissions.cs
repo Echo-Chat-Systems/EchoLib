@@ -46,12 +46,9 @@ public static class VoiceChannelPermissionsExtensions
 	{
 		VoiceChannelPermissions permissions = 0;
 		foreach (string scope in scopes)
-		{
 			if (OAuthMapping.TryGetValue(scope, out VoiceChannelPermissions permission))
-			{
 				permissions |= permission;
-			}
-		}
+
 		return permissions;
 	}
 

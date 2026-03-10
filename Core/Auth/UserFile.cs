@@ -3,7 +3,6 @@ using Core.Models.Other;
 
 namespace Core.Auth;
 
-
 /// <summary>
 /// Represents a decrypted locally stored user file.
 ///
@@ -11,9 +10,7 @@ namespace Core.Auth;
 /// </summary>
 public class UserFile
 {
-	[JsonPropertyName("keys")]
-	public required KeySet Keys { get; set; } 
-	
-	[JsonPropertyName("server")]
-	public required ServerInfo Server { get; set; }
+	[JsonPropertyName("keys")] public required KeySet Keys { get; set; }
+
+	[JsonPropertyName("server")] public required ServerInfo Server { get; set; }
 }

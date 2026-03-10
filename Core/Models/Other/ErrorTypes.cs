@@ -4,5 +4,5 @@ namespace Core.Models.Other;
 public enum ErrorTypes : int
 {
 	DeserializationError,
-	InvalidParameters,
+	InvalidParameters
 }

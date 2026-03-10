@@ -18,7 +18,7 @@ public static class WebSocketTranslator
 	/// <typeparam name="TAction">Action Type</typeparam>
 	/// <typeparam name="TParams">Action Parameters Type</typeparam>
 	public static async Task SendAction<TAction, TParams>(WebSocket socket, TParams parameters)
-	where TAction : IAction<TParams>, new()
+		where TAction : IAction<TParams>, new()
 	{
 		// Create a message envelope for the action
 		MessageEnvelope<TParams> message = new()

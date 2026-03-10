@@ -83,7 +83,7 @@ public abstract class UserRolesHandler : BaseHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@id", new Parameter { Type = DbType.Guid, Value = userRoleId } },
+			{ "@id", new Parameter { Type = DbType.Guid, Value = userRoleId } }
 		});
 
 		// Execute command
@@ -99,7 +99,7 @@ public abstract class UserRolesHandler : BaseHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@id", new Parameter { Type = DbType.Guid, Value = userRoleId } },
+			{ "@id", new Parameter { Type = DbType.Guid, Value = userRoleId } }
 		});
 
 		// Execute command
@@ -139,10 +139,7 @@ public abstract class UserRolesHandler : BaseHandler
 		await using DbDataReader reader = await command.ExecuteReaderAsync();
 		List<MUserRole> rows = [];
 
-		while (await reader.ReadAsync())
-		{
-			rows.Add(new MUserRole(reader));
-		}
+		while (await reader.ReadAsync()) rows.Add(new MUserRole(reader));
 
 		return rows;
 	}
@@ -163,10 +160,7 @@ public abstract class UserRolesHandler : BaseHandler
 		await using DbDataReader reader = await command.ExecuteReaderAsync();
 		List<MUserRole> rows = [];
 
-		while (await reader.ReadAsync())
-		{
-			rows.Add(new MUserRole(reader));
-		}
+		while (await reader.ReadAsync()) rows.Add(new MUserRole(reader));
 
 		return rows;
 	}

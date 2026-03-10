@@ -3,7 +3,7 @@ using Core.Auth.Signing;
 
 namespace Database.Models.Chat;
 
-public class MGuildMember (IDataRecord record) : BaseModel(record)
+public class MGuildMember(IDataRecord record) : BaseModel(record)
 {
 	public Guid GuildId { get; } = record.GetGuid(record.GetOrdinal("guild_id"));
 	public UserId UserId { get; } = new(record.GetString(record.GetOrdinal("user_id")));

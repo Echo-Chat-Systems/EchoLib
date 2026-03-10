@@ -34,7 +34,6 @@ public class MChannelCategory(IDataRecord record) : BaseModel(record)
 
 	public class ChannelCategoryConfig
 	{
-
 	}
 
 	public enum CategoryType : int

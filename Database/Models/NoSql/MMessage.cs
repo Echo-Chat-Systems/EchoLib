@@ -7,13 +7,7 @@ namespace Database.Models.NoSql;
 
 public class MMessage()
 {
-	[Required]
-	[JsonPropertyName("id")]
-	public Snowflake Id
-	{
-		get;
-		init;
-	}
+	[Required] [JsonPropertyName("id")] public Snowflake Id { get; init; }
 
 	[Required]
 	[JsonPropertyName("user_id")]

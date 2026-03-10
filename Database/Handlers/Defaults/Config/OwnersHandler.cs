@@ -63,10 +63,7 @@ public class OwnersHandler : BaseHandler
 		DbDataReader result = await command.ExecuteReaderAsync();
 
 		List<Guid> ids = new();
-		while (await result.ReadAsync())
-		{
-			ids.Add(result.GetGuid(0));
-		}
+		while (await result.ReadAsync()) ids.Add(result.GetGuid(0));
 
 		return ids;
 	}

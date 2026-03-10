@@ -85,7 +85,7 @@ public class ChannelMembersHandler : BaseHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@id", new Parameter { Type =  DbType.Guid, Value = id} }
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
 		});
 
 		// Execute command
@@ -119,7 +119,7 @@ public class ChannelMembersHandler : BaseHandler
 		// Create parameters
 		AddParams(command, new Dictionary<string, Parameter>
 		{
-			{ "@id", new Parameter { Type =  DbType.Guid, Value = id} }
+			{ "@id", new Parameter { Type = DbType.Guid, Value = id } }
 		});
 
 		// Execute command

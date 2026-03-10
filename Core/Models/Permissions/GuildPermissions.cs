@@ -74,7 +74,7 @@ public static class GuildPermissionsExtensions
 		{ "guild:events:delete", GuildPermissions.DeleteEvents },
 		{ "guild:events:create", GuildPermissions.CreateEvents },
 		{ "guild:events:manage", GuildPermissions.ManageEvents },
-		{ "guild:invites:send", GuildPermissions.SendInvites },
+		{ "guild:invites:send", GuildPermissions.SendInvites }
 	};
 
 	/// <summary>
@@ -87,12 +87,8 @@ public static class GuildPermissionsExtensions
 		GuildPermissions permissions = 0;
 
 		foreach (string scope in scopes)
-		{
 			if (OAuthMapping.TryGetValue(scope, out GuildPermissions permission))
-			{
 				permissions |= permission;
-			}
-		}
 
 		return permissions;
 	}

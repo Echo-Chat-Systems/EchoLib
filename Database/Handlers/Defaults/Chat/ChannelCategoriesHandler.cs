@@ -21,7 +21,7 @@ public class ChannelCategoriesHandler : BaseHandler
 			{ "@name", new Parameter { Type = DbType.String, Value = name } },
 			{ "@type", new Parameter { Type = DbType.Int16, Value = type, Nullable = true } },
 			{ "@customisation", new Parameter { Type = DbType.String, Value = customisation, Nullable = true } },
-			{ "@config", new Parameter { Type = DbType.String, Value = config, Nullable = true } },
+			{ "@config", new Parameter { Type = DbType.String, Value = config, Nullable = true } }
 		});
 
 		// Execute command
@@ -59,7 +59,7 @@ public class ChannelCategoriesHandler : BaseHandler
 			{ "@name", new Parameter { Type = DbType.String, Value = channel.Name } },
 			{ "@type", new Parameter { Type = DbType.Int16, Value = channel.Type, Nullable = true } },
 			{ "@customisation", new Parameter { Type = DbType.String, Value = channel.CustomisationRaw, Nullable = true } },
-			{ "@config", new Parameter { Type = DbType.String, Value = channel.ConfigRaw, Nullable = true } },
+			{ "@config", new Parameter { Type = DbType.String, Value = channel.ConfigRaw, Nullable = true } }
 		});
 
 		// Execute command

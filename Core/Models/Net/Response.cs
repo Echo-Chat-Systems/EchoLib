@@ -6,16 +6,12 @@ namespace Core.Models.Net;
 
 public class Response
 {
-	[JsonPropertyName("code")]
-	[Required]
-	public required HttpStatusCode? Code { get; set; }
+	[JsonPropertyName("code")] [Required] public required HttpStatusCode? Code { get; set; }
 
-	[JsonPropertyName("info")]
-	public ResponseInfo? Info { get; set; }
+	[JsonPropertyName("info")] public ResponseInfo? Info { get; set; }
 
 	public class ResponseInfo
 	{
-		[JsonPropertyName("msg")]
-		public required string Message { get; set; }
+		[JsonPropertyName("msg")] public required string Message { get; set; }
 	}
 }

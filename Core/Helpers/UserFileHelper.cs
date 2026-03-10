@@ -9,7 +9,7 @@ namespace Core.Helpers;
 /// </summary>
 public static class UserFileHelper
 {
-	private const int KeySize = 32;  // 256 Bit
+	private const int KeySize = 32; // 256 Bit
 	private const int SaltSize = 16;
 	private const int NonceSize = 12;
 	private const int TagSize = 16;
@@ -43,7 +43,7 @@ public static class UserFileHelper
 		fs.Write(salt);
 		fs.Write(nonce);
 		fs.Write(tag);
-		fs.Write(ciphertext);  // Ciphertext is written last as it is an unknown size
+		fs.Write(ciphertext); // Ciphertext is written last as it is an unknown size
 	}
 
 	/// <summary>
@@ -70,12 +70,15 @@ public static class UserFileHelper
 		// Plaintext byte array
 		byte[] plaintext = new byte[ciphertext.Length];
 
-		using AesGcm aes = new AesGcm(DeriveKey(password, salt), TagSize);
+		using AesGcm aes = new(DeriveKey(password, salt), TagSize);
 		try
 		{
 			aes.Decrypt(nonce, ciphertext, tag, plaintext);
 		}
-		catch (CryptographicException) { return false; }
+		catch (CryptographicException)
+		{
+			return false;
+		}
 
 		// Deserialize plaintext into content
 		userFile = JsonSerializer.Deserialize<UserFile>(plaintext);

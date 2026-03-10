@@ -37,11 +37,9 @@ public class MChannel(IDataRecord record) : BaseModel(record)
 	public class ChannelConfig
 	{
 		// Encrypted status cannot be changed after creation
-		[JsonPropertyName("encrypted")]
-		public bool IsEncrypted { get; }
+		[JsonPropertyName("encrypted")] public bool IsEncrypted { get; }
 
-		[JsonPropertyName("parent")]
-		public Guid? ParentId { get; set; }
+		[JsonPropertyName("parent")] public Guid? ParentId { get; set; }
 	}
 
 	public enum ChannelType : short

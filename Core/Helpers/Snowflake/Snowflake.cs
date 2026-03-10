@@ -3,11 +3,11 @@
 public class Snowflake
 {
 	public ulong Value { get; }
-	
+
 	public DateTime Timestamp { get; }
 	public byte ApiVersion { get; }
 	public ulong Increment { get; }
-	
+
 	public Snowflake(ulong snowflake)
 	{
 		Value = snowflake;

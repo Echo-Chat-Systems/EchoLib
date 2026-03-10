@@ -2,7 +2,7 @@ using System.Data;
 
 namespace Database.Models;
 
-public class BaseModel (IDataRecord record)
+public class BaseModel(IDataRecord record)
 {
 	/// <summary>
 	/// Item database id.
