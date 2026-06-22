@@ -12,6 +12,22 @@ to get a built configuration object.
 ### Example
 
 ```csharp
+class MyConfig 
+{
+    [ConfigProperty]
+    public DatabaseModel Database { get; set; }
+    
+    [ConfigModel]
+    public class DatabaseModel
+    {
+        public string Host { get; set; }
+        public int Port { get; set; }
+        public string Username { get; set; }
+        [ConfigSecret]
+        public string Password { get; set; }
+    }
+}
+
 // Get IConfig (from appsettings.json for example)
 IConfiguration config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
