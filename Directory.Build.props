@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
-        <VersionPrefix>1.0.1-fix-001</VersionPrefix>
-        <VersionSuffix></VersionSuffix>
+        <VersionPrefix>1.2.0</VersionPrefix>
+        <VersionSuffix>-unstable</VersionSuffix>
 
         <Authors>Kyle Pannan</Authors>
         <Company>Echo-Chat</Company>
@@ -11,13 +11,13 @@
 
         <PackageIcon>icon.png</PackageIcon>
         <PackageIconUrl>https://static.echo-chat.au/res/appicon.png</PackageIconUrl>
-        
+
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\" />
-        <None Include="README.md" Pack="true" PackagePath="\" />
+        <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\"/>
+        <None Include="README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>

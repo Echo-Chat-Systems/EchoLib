@@ -15,7 +15,7 @@ public static class ConfigBuilder
 
 		IEnumerable<PropertyInfo> properties = rootType
 			.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-			.Where(p => p.IsDefined(typeof(ConfigPropertyAttribute)));
+			.Where(p => p.IsDefined(typeof(ConfigPropertyAttribute)) && !p.IsDefined(typeof(ConfigIgnoreAttribute)));
 
 		foreach (PropertyInfo property in properties)
 		{
