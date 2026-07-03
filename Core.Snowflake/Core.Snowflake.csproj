@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageId>EchoChat.Core.Snowflake</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>Kyle Pannan</Authors>
+        <Company>EchoChat</Company>
+        <Description>Snowflake generation for EchoLib</Description>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Core.Snowflake</RootNamespace>
+    </PropertyGroup>
+
+</Project>
