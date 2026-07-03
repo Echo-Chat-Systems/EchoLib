@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <PackageId>EchoChat.Database</PackageId>
+        <PackageId>EchoLib.Database</PackageId>
         <Version>0.0.1-dev-00001</Version>
         <Authors>Kyle Pannan</Authors>
         <Company>EchoChat</Company>
