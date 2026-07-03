@@ -13,6 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Core.Snowflake\Core.Snowflake.csproj" />
         <ProjectReference Include="..\Core\Core.csproj"/>
     </ItemGroup>
 
