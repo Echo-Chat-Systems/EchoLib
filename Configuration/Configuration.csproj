@@ -8,7 +8,9 @@
 
         <PackageId>EchoLib.Configuration</PackageId>
         <Version/>
+
         <Title>EchoLib Configuration</Title>
+
         <Description>Pretty useful confuration framework intended for use in EchoChat, but useful elsewhere.</Description>
         <RootNamespace>EchoLib.Configuration</RootNamespace>
     </PropertyGroup>
