@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Models.Comms.Users.Broadcasts.User;
+using Core.Models.Net.Users.Broadcasts.User;
 
 namespace Core.Processes.Params.Auth.Signin;
 

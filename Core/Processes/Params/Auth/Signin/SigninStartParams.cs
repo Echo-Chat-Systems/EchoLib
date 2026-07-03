@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
-using Models.Crypto.Encryption;
-using Models.Crypto.Signing;
-using Models.Functional.Crypto.Signing;
+using Core.Auth.Encryption;
+using Core.Auth.Signing;
 
 namespace Core.Processes.Params.Auth.Signin;
 

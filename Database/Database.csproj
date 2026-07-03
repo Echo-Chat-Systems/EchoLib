@@ -13,11 +13,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Core\Core.csproj" />
+        <ProjectReference Include="..\Core.Snowflake\Core.Snowflake.csproj" />
+        <ProjectReference Include="..\Core\Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Dapper" Version="2.1.66" />
+        <Folder Include="Handlers\Defaults\NoSql\"/>
     </ItemGroup>
 
 </Project>

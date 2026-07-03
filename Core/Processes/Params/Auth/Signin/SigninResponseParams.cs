@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Models.Crypto.Signing;
+using Core.Auth.Signing;
 
 namespace Core.Processes.Params.Auth.Signin;
 
