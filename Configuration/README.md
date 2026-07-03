@@ -5,9 +5,9 @@ projects following the same architecture.
 
 ## How To
 
-Usage of this framework is relatively simple, all you do is build a model that 
+Usage of this framework is relatively simple, all you do is build a model that
 matches your configuration file (or vise versa) and call `ConfigBuilder.Build<T>(IConfiguration config)`
-to get a built configuration object. 
+to get a built configuration object.
 
 ### Example
 

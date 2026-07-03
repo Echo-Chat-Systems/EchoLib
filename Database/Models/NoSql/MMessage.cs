@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Core.Auth.Signing;
-using Core.Helpers.Snowflake;
+using EchoLib.Core.Snowflake;
 
 namespace Database.Models.NoSql;
 

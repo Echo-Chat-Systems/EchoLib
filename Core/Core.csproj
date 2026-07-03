@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Helpers\Snowflake\" />
+        <Folder Include="Helpers\Snowflake\"/>
     </ItemGroup>
 
 </Project>
