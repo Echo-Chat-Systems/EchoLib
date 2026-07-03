@@ -1,4 +1,4 @@
-﻿namespace Core.Helpers.Snowflake;
+﻿namespace EchoLib.Core.Snowflake;
 
 public class SnowflakeGenerator
 {

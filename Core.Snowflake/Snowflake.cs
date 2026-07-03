@@ -1,6 +1,7 @@
 ﻿namespace Core.Helpers.Snowflake;
 
 public class Snowflake
+namespace EchoLib.Core.Snowflake;
 {
 	public ulong Value { get; }
 
