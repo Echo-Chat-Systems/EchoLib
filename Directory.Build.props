@@ -1,8 +1,5 @@
 <Project>
     <PropertyGroup>
-        <VersionPrefix>1.2.0</VersionPrefix>
-        <VersionSuffix>unstable</VersionSuffix>
-
         <Authors>Kyle Pannan</Authors>
         <Company>Echo-Chat</Company>
 

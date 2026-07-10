@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration", "Configurat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Snowflake", "Core.Snowflake\Core.Snowflake.csproj", "{C5FCABF7-9B47-4287-AC50-1576589E16D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Routing", "Core.Routing\Core.Routing.csproj", "{945EDD94-14B9-4591-9A22-4BE401DD94C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{C5FCABF7-9B47-4287-AC50-1576589E16D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5FCABF7-9B47-4287-AC50-1576589E16D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5FCABF7-9B47-4287-AC50-1576589E16D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{945EDD94-14B9-4591-9A22-4BE401DD94C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{945EDD94-14B9-4591-9A22-4BE401DD94C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{945EDD94-14B9-4591-9A22-4BE401DD94C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{945EDD94-14B9-4591-9A22-4BE401DD94C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

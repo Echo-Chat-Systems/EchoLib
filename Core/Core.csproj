@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageId>EchoLib.Core</PackageId>
-        <Version>0.0.1-dev-00014</Version>
+        <Version>0.0.2</Version>
 
         <Description>Core library for EchoChat, providing essential functionalities and interfaces.</Description>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.1"/>
+        <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
     </ItemGroup>
 
     <ItemGroup>
